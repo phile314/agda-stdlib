@@ -1,0 +1,4248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Induction.Nat</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="73"
+      >
+</a
+      ><a name="74" class="Comment"
+      >-- The Agda standard library</a
+      ><a name="102"
+      >
+</a
+      ><a name="103" class="Comment"
+      >--</a
+      ><a name="105"
+      >
+</a
+      ><a name="106" class="Comment"
+      >-- Various forms of induction for natural numbers</a
+      ><a name="155"
+      >
+</a
+      ><a name="156" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="228"
+      >
+
+</a
+      ><a name="230" class="Keyword"
+      >module</a
+      ><a name="236"
+      > </a
+      ><a name="237" href="Induction.Nat.html#1" class="Module"
+      >Induction.Nat</a
+      ><a name="250"
+      > </a
+      ><a name="251" class="Keyword"
+      >where</a
+      ><a name="256"
+      >
+
+</a
+      ><a name="258" class="Keyword"
+      >open</a
+      ><a name="262"
+      > </a
+      ><a name="263" class="Keyword"
+      >import</a
+      ><a name="269"
+      > </a
+      ><a name="270" href="Function.html#1" class="Module"
+      >Function</a
+      ><a name="278"
+      >
+</a
+      ><a name="279" class="Keyword"
+      >open</a
+      ><a name="283"
+      > </a
+      ><a name="284" class="Keyword"
+      >import</a
+      ><a name="290"
+      > </a
+      ><a name="291" href="Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="299"
+      >
+</a
+      ><a name="300" class="Keyword"
+      >open</a
+      ><a name="304"
+      > </a
+      ><a name="305" class="Keyword"
+      >import</a
+      ><a name="311"
+      > </a
+      ><a name="312" href="Data.Fin.html#1" class="Module"
+      >Data.Fin</a
+      ><a name="320"
+      > </a
+      ><a name="321" class="Keyword"
+      >using</a
+      ><a name="326"
+      > </a
+      ><a name="327" class="Symbol"
+      >(</a
+      ><a name="328"
+      >_&#8826;_</a
+      ><a name="331" class="Symbol"
+      >)</a
+      ><a name="332"
+      >
+</a
+      ><a name="333" class="Keyword"
+      >open</a
+      ><a name="337"
+      > </a
+      ><a name="338" class="Keyword"
+      >import</a
+      ><a name="344"
+      > </a
+      ><a name="345" href="Data.Fin.Props.html#1" class="Module"
+      >Data.Fin.Props</a
+      ><a name="359"
+      >
+</a
+      ><a name="360" class="Keyword"
+      >open</a
+      ><a name="364"
+      > </a
+      ><a name="365" class="Keyword"
+      >import</a
+      ><a name="371"
+      > </a
+      ><a name="372" href="Data.Product.html#1" class="Module"
+      >Data.Product</a
+      ><a name="384"
+      >
+</a
+      ><a name="385" class="Keyword"
+      >open</a
+      ><a name="389"
+      > </a
+      ><a name="390" class="Keyword"
+      >import</a
+      ><a name="396"
+      > </a
+      ><a name="397" href="Data.Unit.html#1" class="Module"
+      >Data.Unit</a
+      ><a name="406"
+      >
+</a
+      ><a name="407" class="Keyword"
+      >open</a
+      ><a name="411"
+      > </a
+      ><a name="412" class="Keyword"
+      >import</a
+      ><a name="418"
+      > </a
+      ><a name="419" href="Induction.html#1" class="Module"
+      >Induction</a
+      ><a name="428"
+      >
+</a
+      ><a name="429" class="Keyword"
+      >open</a
+      ><a name="433"
+      > </a
+      ><a name="434" class="Keyword"
+      >import</a
+      ><a name="440"
+      > </a
+      ><a name="441" href="Induction.WellFounded.html#1" class="Module"
+      >Induction.WellFounded</a
+      ><a name="462"
+      > </a
+      ><a name="463" class="Symbol"
+      >as</a
+      ><a name="465"
+      > </a
+      ><a name="466" class="Module"
+      >WF</a
+      ><a name="468"
+      >
+</a
+      ><a name="469" class="Keyword"
+      >open</a
+      ><a name="473"
+      > </a
+      ><a name="474" class="Keyword"
+      >import</a
+      ><a name="480"
+      > </a
+      ><a name="481" href="Level.html#1" class="Module"
+      >Level</a
+      ><a name="486"
+      > </a
+      ><a name="487" class="Keyword"
+      >using</a
+      ><a name="492"
+      > </a
+      ><a name="493" class="Symbol"
+      >(</a
+      ><a name="494"
+      >Lift</a
+      ><a name="498" class="Symbol"
+      >)</a
+      ><a name="499"
+      >
+</a
+      ><a name="500" class="Keyword"
+      >open</a
+      ><a name="504"
+      > </a
+      ><a name="505" class="Keyword"
+      >import</a
+      ><a name="511"
+      > </a
+      ><a name="512" href="Relation.Binary.PropositionalEquality.html#1" class="Module"
+      >Relation.Binary.PropositionalEquality</a
+      ><a name="549"
+      >
+</a
+      ><a name="550" class="Keyword"
+      >open</a
+      ><a name="554"
+      > </a
+      ><a name="555" class="Keyword"
+      >import</a
+      ><a name="561"
+      > </a
+      ><a name="562" href="Relation.Unary.html#1" class="Module"
+      >Relation.Unary</a
+      ><a name="576"
+      >
+
+</a
+      ><a name="578" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="650"
+      >
+</a
+      ><a name="651" class="Comment"
+      >-- Ordinary induction</a
+      ><a name="672"
+      >
+
+</a
+      ><a name="674" href="Induction.Nat.html#674" class="Function"
+      >Rec</a
+      ><a name="677"
+      > </a
+      ><a name="678" class="Symbol"
+      >:</a
+      ><a name="679"
+      > </a
+      ><a name="680" class="Symbol"
+      >&#8704;</a
+      ><a name="681"
+      > </a
+      ><a name="682" href="Induction.Nat.html#682" class="Bound"
+      >&#8467;</a
+      ><a name="683"
+      > </a
+      ><a name="684" class="Symbol"
+      >&#8594;</a
+      ><a name="685"
+      > </a
+      ><a name="686" href="Induction.html#724" class="Function"
+      >RecStruct</a
+      ><a name="695"
+      > </a
+      ><a name="696" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="697"
+      > </a
+      ><a name="698" href="Induction.Nat.html#682" class="Bound"
+      >&#8467;</a
+      ><a name="699"
+      > </a
+      ><a name="700" href="Induction.Nat.html#682" class="Bound"
+      >&#8467;</a
+      ><a name="701"
+      >
+</a
+      ><a name="702" href="Induction.Nat.html#674" class="Function"
+      >Rec</a
+      ><a name="705"
+      > </a
+      ><a name="706" class="Symbol"
+      >_</a
+      ><a name="707"
+      > </a
+      ><a name="708" href="Induction.Nat.html#708" class="Bound"
+      >P</a
+      ><a name="709"
+      > </a
+      ><a name="710" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="714"
+      >    </a
+      ><a name="718" class="Symbol"
+      >=</a
+      ><a name="719"
+      > </a
+      ><a name="720" href="Level.html#350" class="Record"
+      >Lift</a
+      ><a name="724"
+      > </a
+      ><a name="725" href="Data.Unit.html#653" class="Record"
+      >&#8868;</a
+      ><a name="726"
+      >
+</a
+      ><a name="727" href="Induction.Nat.html#674" class="Function"
+      >Rec</a
+      ><a name="730"
+      > </a
+      ><a name="731" class="Symbol"
+      >_</a
+      ><a name="732"
+      > </a
+      ><a name="733" href="Induction.Nat.html#733" class="Bound"
+      >P</a
+      ><a name="734"
+      > </a
+      ><a name="735" class="Symbol"
+      >(</a
+      ><a name="736" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="739"
+      > </a
+      ><a name="740" href="Induction.Nat.html#740" class="Bound"
+      >n</a
+      ><a name="741" class="Symbol"
+      >)</a
+      ><a name="742"
+      > </a
+      ><a name="743" class="Symbol"
+      >=</a
+      ><a name="744"
+      > </a
+      ><a name="745" href="Induction.Nat.html#733" class="Bound"
+      >P</a
+      ><a name="746"
+      > </a
+      ><a name="747" href="Induction.Nat.html#740" class="Bound"
+      >n</a
+      ><a name="748"
+      >
+
+</a
+      ><a name="750" href="Induction.Nat.html#750" class="Function"
+      >rec-builder</a
+      ><a name="761"
+      > </a
+      ><a name="762" class="Symbol"
+      >:</a
+      ><a name="763"
+      > </a
+      ><a name="764" class="Symbol"
+      >&#8704;</a
+      ><a name="765"
+      > </a
+      ><a name="766" class="Symbol"
+      >{</a
+      ><a name="767" href="Induction.Nat.html#767" class="Bound"
+      >&#8467;</a
+      ><a name="768" class="Symbol"
+      >}</a
+      ><a name="769"
+      > </a
+      ><a name="770" class="Symbol"
+      >&#8594;</a
+      ><a name="771"
+      > </a
+      ><a name="772" href="Induction.html#912" class="Function"
+      >RecursorBuilder</a
+      ><a name="787"
+      > </a
+      ><a name="788" class="Symbol"
+      >(</a
+      ><a name="789" href="Induction.Nat.html#674" class="Function"
+      >Rec</a
+      ><a name="792"
+      > </a
+      ><a name="793" href="Induction.Nat.html#767" class="Bound"
+      >&#8467;</a
+      ><a name="794" class="Symbol"
+      >)</a
+      ><a name="795"
+      >
+</a
+      ><a name="796" href="Induction.Nat.html#750" class="Function"
+      >rec-builder</a
+      ><a name="807"
+      > </a
+      ><a name="808" href="Induction.Nat.html#808" class="Bound"
+      >P</a
+      ><a name="809"
+      > </a
+      ><a name="810" href="Induction.Nat.html#810" class="Bound"
+      >f</a
+      ><a name="811"
+      > </a
+      ><a name="812" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="816"
+      >    </a
+      ><a name="820" class="Symbol"
+      >=</a
+      ><a name="821"
+      > </a
+      ><a name="822" class="Symbol"
+      >_</a
+      ><a name="823"
+      >
+</a
+      ><a name="824" href="Induction.Nat.html#750" class="Function"
+      >rec-builder</a
+      ><a name="835"
+      > </a
+      ><a name="836" href="Induction.Nat.html#836" class="Bound"
+      >P</a
+      ><a name="837"
+      > </a
+      ><a name="838" href="Induction.Nat.html#838" class="Bound"
+      >f</a
+      ><a name="839"
+      > </a
+      ><a name="840" class="Symbol"
+      >(</a
+      ><a name="841" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="844"
+      > </a
+      ><a name="845" href="Induction.Nat.html#845" class="Bound"
+      >n</a
+      ><a name="846" class="Symbol"
+      >)</a
+      ><a name="847"
+      > </a
+      ><a name="848" class="Symbol"
+      >=</a
+      ><a name="849"
+      > </a
+      ><a name="850" href="Induction.Nat.html#838" class="Bound"
+      >f</a
+      ><a name="851"
+      > </a
+      ><a name="852" href="Induction.Nat.html#845" class="Bound"
+      >n</a
+      ><a name="853"
+      > </a
+      ><a name="854" class="Symbol"
+      >(</a
+      ><a name="855" href="Induction.Nat.html#750" class="Function"
+      >rec-builder</a
+      ><a name="866"
+      > </a
+      ><a name="867" href="Induction.Nat.html#836" class="Bound"
+      >P</a
+      ><a name="868"
+      > </a
+      ><a name="869" href="Induction.Nat.html#838" class="Bound"
+      >f</a
+      ><a name="870"
+      > </a
+      ><a name="871" href="Induction.Nat.html#845" class="Bound"
+      >n</a
+      ><a name="872" class="Symbol"
+      >)</a
+      ><a name="873"
+      >
+
+</a
+      ><a name="875" href="Induction.Nat.html#875" class="Function"
+      >rec</a
+      ><a name="878"
+      > </a
+      ><a name="879" class="Symbol"
+      >:</a
+      ><a name="880"
+      > </a
+      ><a name="881" class="Symbol"
+      >&#8704;</a
+      ><a name="882"
+      > </a
+      ><a name="883" class="Symbol"
+      >{</a
+      ><a name="884" href="Induction.Nat.html#884" class="Bound"
+      >&#8467;</a
+      ><a name="885" class="Symbol"
+      >}</a
+      ><a name="886"
+      > </a
+      ><a name="887" class="Symbol"
+      >&#8594;</a
+      ><a name="888"
+      > </a
+      ><a name="889" href="Induction.html#1113" class="Function"
+      >Recursor</a
+      ><a name="897"
+      > </a
+      ><a name="898" class="Symbol"
+      >(</a
+      ><a name="899" href="Induction.Nat.html#674" class="Function"
+      >Rec</a
+      ><a name="902"
+      > </a
+      ><a name="903" href="Induction.Nat.html#884" class="Bound"
+      >&#8467;</a
+      ><a name="904" class="Symbol"
+      >)</a
+      ><a name="905"
+      >
+</a
+      ><a name="906" href="Induction.Nat.html#875" class="Function"
+      >rec</a
+      ><a name="909"
+      > </a
+      ><a name="910" class="Symbol"
+      >=</a
+      ><a name="911"
+      > </a
+      ><a name="912" href="Induction.html#1284" class="Function"
+      >build</a
+      ><a name="917"
+      > </a
+      ><a name="918" href="Induction.Nat.html#750" class="Function"
+      >rec-builder</a
+      ><a name="929"
+      >
+
+</a
+      ><a name="931" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="1003"
+      >
+</a
+      ><a name="1004" class="Comment"
+      >-- Complete induction</a
+      ><a name="1025"
+      >
+
+</a
+      ><a name="1027" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1031"
+      > </a
+      ><a name="1032" class="Symbol"
+      >:</a
+      ><a name="1033"
+      > </a
+      ><a name="1034" class="Symbol"
+      >&#8704;</a
+      ><a name="1035"
+      > </a
+      ><a name="1036" href="Induction.Nat.html#1036" class="Bound"
+      >&#8467;</a
+      ><a name="1037"
+      > </a
+      ><a name="1038" class="Symbol"
+      >&#8594;</a
+      ><a name="1039"
+      > </a
+      ><a name="1040" href="Induction.html#724" class="Function"
+      >RecStruct</a
+      ><a name="1049"
+      > </a
+      ><a name="1050" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="1051"
+      > </a
+      ><a name="1052" href="Induction.Nat.html#1036" class="Bound"
+      >&#8467;</a
+      ><a name="1053"
+      > </a
+      ><a name="1054" href="Induction.Nat.html#1036" class="Bound"
+      >&#8467;</a
+      ><a name="1055"
+      >
+</a
+      ><a name="1056" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1060"
+      > </a
+      ><a name="1061" class="Symbol"
+      >_</a
+      ><a name="1062"
+      > </a
+      ><a name="1063" href="Induction.Nat.html#1063" class="Bound"
+      >P</a
+      ><a name="1064"
+      > </a
+      ><a name="1065" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="1069"
+      >    </a
+      ><a name="1073" class="Symbol"
+      >=</a
+      ><a name="1074"
+      > </a
+      ><a name="1075" href="Level.html#350" class="Record"
+      >Lift</a
+      ><a name="1079"
+      > </a
+      ><a name="1080" href="Data.Unit.html#653" class="Record"
+      >&#8868;</a
+      ><a name="1081"
+      >
+</a
+      ><a name="1082" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1086"
+      > </a
+      ><a name="1087" class="Symbol"
+      >_</a
+      ><a name="1088"
+      > </a
+      ><a name="1089" href="Induction.Nat.html#1089" class="Bound"
+      >P</a
+      ><a name="1090"
+      > </a
+      ><a name="1091" class="Symbol"
+      >(</a
+      ><a name="1092" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="1095"
+      > </a
+      ><a name="1096" href="Induction.Nat.html#1096" class="Bound"
+      >n</a
+      ><a name="1097" class="Symbol"
+      >)</a
+      ><a name="1098"
+      > </a
+      ><a name="1099" class="Symbol"
+      >=</a
+      ><a name="1100"
+      > </a
+      ><a name="1101" href="Induction.Nat.html#1089" class="Bound"
+      >P</a
+      ><a name="1102"
+      > </a
+      ><a name="1103" href="Induction.Nat.html#1096" class="Bound"
+      >n</a
+      ><a name="1104"
+      > </a
+      ><a name="1105" href="Data.Product.html#1055" class="Function Operator"
+      >&#215;</a
+      ><a name="1106"
+      > </a
+      ><a name="1107" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1111"
+      > </a
+      ><a name="1112" class="Symbol"
+      >_</a
+      ><a name="1113"
+      > </a
+      ><a name="1114" href="Induction.Nat.html#1089" class="Bound"
+      >P</a
+      ><a name="1115"
+      > </a
+      ><a name="1116" href="Induction.Nat.html#1096" class="Bound"
+      >n</a
+      ><a name="1117"
+      >
+
+</a
+      ><a name="1119" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="1131"
+      > </a
+      ><a name="1132" class="Symbol"
+      >:</a
+      ><a name="1133"
+      > </a
+      ><a name="1134" class="Symbol"
+      >&#8704;</a
+      ><a name="1135"
+      > </a
+      ><a name="1136" class="Symbol"
+      >{</a
+      ><a name="1137" href="Induction.Nat.html#1137" class="Bound"
+      >&#8467;</a
+      ><a name="1138" class="Symbol"
+      >}</a
+      ><a name="1139"
+      > </a
+      ><a name="1140" class="Symbol"
+      >&#8594;</a
+      ><a name="1141"
+      > </a
+      ><a name="1142" href="Induction.html#912" class="Function"
+      >RecursorBuilder</a
+      ><a name="1157"
+      > </a
+      ><a name="1158" class="Symbol"
+      >(</a
+      ><a name="1159" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1163"
+      > </a
+      ><a name="1164" href="Induction.Nat.html#1137" class="Bound"
+      >&#8467;</a
+      ><a name="1165" class="Symbol"
+      >)</a
+      ><a name="1166"
+      >
+</a
+      ><a name="1167" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="1179"
+      > </a
+      ><a name="1180" href="Induction.Nat.html#1180" class="Bound"
+      >P</a
+      ><a name="1181"
+      > </a
+      ><a name="1182" href="Induction.Nat.html#1182" class="Bound"
+      >f</a
+      ><a name="1183"
+      > </a
+      ><a name="1184" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="1188"
+      >    </a
+      ><a name="1192" class="Symbol"
+      >=</a
+      ><a name="1193"
+      > </a
+      ><a name="1194" class="Symbol"
+      >_</a
+      ><a name="1195"
+      >
+</a
+      ><a name="1196" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="1208"
+      > </a
+      ><a name="1209" href="Induction.Nat.html#1209" class="Bound"
+      >P</a
+      ><a name="1210"
+      > </a
+      ><a name="1211" href="Induction.Nat.html#1211" class="Bound"
+      >f</a
+      ><a name="1212"
+      > </a
+      ><a name="1213" class="Symbol"
+      >(</a
+      ><a name="1214" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="1217"
+      > </a
+      ><a name="1218" href="Induction.Nat.html#1218" class="Bound"
+      >n</a
+      ><a name="1219" class="Symbol"
+      >)</a
+      ><a name="1220"
+      > </a
+      ><a name="1221" class="Symbol"
+      >=</a
+      ><a name="1222"
+      > </a
+      ><a name="1223" href="Induction.Nat.html#1211" class="Bound"
+      >f</a
+      ><a name="1224"
+      > </a
+      ><a name="1225" href="Induction.Nat.html#1218" class="Bound"
+      >n</a
+      ><a name="1226"
+      > </a
+      ><a name="1227" href="Induction.Nat.html#1243" class="Function"
+      >ih</a
+      ><a name="1229"
+      > </a
+      ><a name="1230" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="1231"
+      > </a
+      ><a name="1232" href="Induction.Nat.html#1243" class="Function"
+      >ih</a
+      ><a name="1234"
+      >
+  </a
+      ><a name="1237" class="Keyword"
+      >where</a
+      ><a name="1242"
+      > </a
+      ><a name="1243" href="Induction.Nat.html#1243" class="Function"
+      >ih</a
+      ><a name="1245"
+      > </a
+      ><a name="1246" class="Symbol"
+      >=</a
+      ><a name="1247"
+      > </a
+      ><a name="1248" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="1260"
+      > </a
+      ><a name="1261" href="Induction.Nat.html#1209" class="Bound"
+      >P</a
+      ><a name="1262"
+      > </a
+      ><a name="1263" href="Induction.Nat.html#1211" class="Bound"
+      >f</a
+      ><a name="1264"
+      > </a
+      ><a name="1265" href="Induction.Nat.html#1218" class="Bound"
+      >n</a
+      ><a name="1266"
+      >
+
+</a
+      ><a name="1268" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="1272"
+      > </a
+      ><a name="1273" class="Symbol"
+      >:</a
+      ><a name="1274"
+      > </a
+      ><a name="1275" class="Symbol"
+      >&#8704;</a
+      ><a name="1276"
+      > </a
+      ><a name="1277" class="Symbol"
+      >{</a
+      ><a name="1278" href="Induction.Nat.html#1278" class="Bound"
+      >&#8467;</a
+      ><a name="1279" class="Symbol"
+      >}</a
+      ><a name="1280"
+      > </a
+      ><a name="1281" class="Symbol"
+      >&#8594;</a
+      ><a name="1282"
+      > </a
+      ><a name="1283" href="Induction.html#1113" class="Function"
+      >Recursor</a
+      ><a name="1291"
+      > </a
+      ><a name="1292" class="Symbol"
+      >(</a
+      ><a name="1293" href="Induction.Nat.html#1027" class="Function"
+      >CRec</a
+      ><a name="1297"
+      > </a
+      ><a name="1298" href="Induction.Nat.html#1278" class="Bound"
+      >&#8467;</a
+      ><a name="1299" class="Symbol"
+      >)</a
+      ><a name="1300"
+      >
+</a
+      ><a name="1301" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="1305"
+      > </a
+      ><a name="1306" class="Symbol"
+      >=</a
+      ><a name="1307"
+      > </a
+      ><a name="1308" href="Induction.html#1284" class="Function"
+      >build</a
+      ><a name="1313"
+      > </a
+      ><a name="1314" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="1326"
+      >
+
+</a
+      ><a name="1328" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="1400"
+      >
+</a
+      ><a name="1401" class="Comment"
+      >-- Complete induction based on _&lt;&#8242;_</a
+      ><a name="1436"
+      >
+
+</a
+      ><a name="1438" href="Induction.Nat.html#1438" class="Function"
+      >&lt;-Rec</a
+      ><a name="1443"
+      > </a
+      ><a name="1444" class="Symbol"
+      >:</a
+      ><a name="1445"
+      > </a
+      ><a name="1446" class="Symbol"
+      >&#8704;</a
+      ><a name="1447"
+      > </a
+      ><a name="1448" class="Symbol"
+      >{</a
+      ><a name="1449" href="Induction.Nat.html#1449" class="Bound"
+      >&#8467;</a
+      ><a name="1450" class="Symbol"
+      >}</a
+      ><a name="1451"
+      > </a
+      ><a name="1452" class="Symbol"
+      >&#8594;</a
+      ><a name="1453"
+      > </a
+      ><a name="1454" href="Induction.html#724" class="Function"
+      >RecStruct</a
+      ><a name="1463"
+      > </a
+      ><a name="1464" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="1465"
+      > </a
+      ><a name="1466" href="Induction.Nat.html#1449" class="Bound"
+      >&#8467;</a
+      ><a name="1467"
+      > </a
+      ><a name="1468" href="Induction.Nat.html#1449" class="Bound"
+      >&#8467;</a
+      ><a name="1469"
+      >
+</a
+      ><a name="1470" href="Induction.Nat.html#1438" class="Function"
+      >&lt;-Rec</a
+      ><a name="1475"
+      > </a
+      ><a name="1476" class="Symbol"
+      >=</a
+      ><a name="1477"
+      > </a
+      ><a name="1478" href="Induction.WellFounded.html#530" class="Function"
+      >WfRec</a
+      ><a name="1483"
+      > </a
+      ><a name="1484" href="Data.Nat.html#1485" class="Function Operator"
+      >_&lt;&#8242;_</a
+      ><a name="1488"
+      >
+
+</a
+      ><a name="1490" class="Keyword"
+      >mutual</a
+      ><a name="1496"
+      >
+
+  </a
+      ><a name="1500" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="1514"
+      > </a
+      ><a name="1515" class="Symbol"
+      >:</a
+      ><a name="1516"
+      > </a
+      ><a name="1517" href="Induction.WellFounded.html#1012" class="Function"
+      >Well-founded</a
+      ><a name="1529"
+      > </a
+      ><a name="1530" href="Data.Nat.html#1485" class="Function Operator"
+      >_&lt;&#8242;_</a
+      ><a name="1534"
+      >
+  </a
+      ><a name="1537" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="1551"
+      > </a
+      ><a name="1552" href="Induction.Nat.html#1552" class="Bound"
+      >n</a
+      ><a name="1553"
+      > </a
+      ><a name="1554" class="Symbol"
+      >=</a
+      ><a name="1555"
+      > </a
+      ><a name="1556" href="Induction.WellFounded.html#826" class="InductiveConstructor"
+      >acc</a
+      ><a name="1559"
+      > </a
+      ><a name="1560" class="Symbol"
+      >(</a
+      ><a name="1561" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1576"
+      > </a
+      ><a name="1577" href="Induction.Nat.html#1552" class="Bound"
+      >n</a
+      ><a name="1578" class="Symbol"
+      >)</a
+      ><a name="1579"
+      >
+
+  </a
+      ><a name="1583" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1598"
+      > </a
+      ><a name="1599" class="Symbol"
+      >:</a
+      ><a name="1600"
+      > </a
+      ><a name="1601" class="Symbol"
+      >&#8704;</a
+      ><a name="1602"
+      > </a
+      ><a name="1603" href="Induction.Nat.html#1603" class="Bound"
+      >n</a
+      ><a name="1604"
+      > </a
+      ><a name="1605" class="Symbol"
+      >&#8594;</a
+      ><a name="1606"
+      > </a
+      ><a name="1607" href="Induction.Nat.html#1438" class="Function"
+      >&lt;-Rec</a
+      ><a name="1612"
+      > </a
+      ><a name="1613" class="Symbol"
+      >(</a
+      ><a name="1614" href="Induction.WellFounded.html#758" class="Datatype"
+      >Acc</a
+      ><a name="1617"
+      > </a
+      ><a name="1618" href="Data.Nat.html#1485" class="Function Operator"
+      >_&lt;&#8242;_</a
+      ><a name="1622" class="Symbol"
+      >)</a
+      ><a name="1623"
+      > </a
+      ><a name="1624" href="Induction.Nat.html#1603" class="Bound"
+      >n</a
+      ><a name="1625"
+      >
+  </a
+      ><a name="1628" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1643"
+      > </a
+      ><a name="1644" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="1648"
+      >     </a
+      ><a name="1653" class="Symbol"
+      >_</a
+      ><a name="1654"
+      > </a
+      ><a name="1655" class="Symbol"
+      >()</a
+      ><a name="1657"
+      >
+  </a
+      ><a name="1660" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1675"
+      > </a
+      ><a name="1676" class="Symbol"
+      >(</a
+      ><a name="1677" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="1680"
+      > </a
+      ><a name="1681" href="Induction.Nat.html#1681" class="Bound"
+      >n</a
+      ><a name="1682" class="Symbol"
+      >)</a
+      ><a name="1683"
+      > </a
+      ><a name="1684" class="DottedPattern Symbol"
+      >.</a
+      ><a name="1685" href="Induction.Nat.html#1681" class="DottedPattern Bound"
+      >n</a
+      ><a name="1686"
+      > </a
+      ><a name="1687" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="1694"
+      >       </a
+      ><a name="1701" class="Symbol"
+      >=</a
+      ><a name="1702"
+      > </a
+      ><a name="1703" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="1717"
+      > </a
+      ><a name="1718" href="Induction.Nat.html#1681" class="Bound"
+      >n</a
+      ><a name="1719"
+      >
+  </a
+      ><a name="1722" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1737"
+      > </a
+      ><a name="1738" class="Symbol"
+      >(</a
+      ><a name="1739" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="1742"
+      > </a
+      ><a name="1743" href="Induction.Nat.html#1743" class="Bound"
+      >n</a
+      ><a name="1744" class="Symbol"
+      >)</a
+      ><a name="1745"
+      >  </a
+      ><a name="1747" href="Induction.Nat.html#1747" class="Bound"
+      >m</a
+      ><a name="1748"
+      > </a
+      ><a name="1749" class="Symbol"
+      >(</a
+      ><a name="1750" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="1757"
+      > </a
+      ><a name="1758" href="Induction.Nat.html#1758" class="Bound"
+      >m&lt;n</a
+      ><a name="1761" class="Symbol"
+      >)</a
+      ><a name="1762"
+      > </a
+      ><a name="1763" class="Symbol"
+      >=</a
+      ><a name="1764"
+      > </a
+      ><a name="1765" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="1780"
+      > </a
+      ><a name="1781" href="Induction.Nat.html#1743" class="Bound"
+      >n</a
+      ><a name="1782"
+      > </a
+      ><a name="1783" href="Induction.Nat.html#1747" class="Bound"
+      >m</a
+      ><a name="1784"
+      > </a
+      ><a name="1785" href="Induction.Nat.html#1758" class="Bound"
+      >m&lt;n</a
+      ><a name="1788"
+      >
+
+</a
+      ><a name="1790" class="Keyword"
+      >module</a
+      ><a name="1796"
+      > </a
+      ><a name="1797" href="Induction.Nat.html#1797" class="Module"
+      >_</a
+      ><a name="1798"
+      > </a
+      ><a name="1799" class="Symbol"
+      >{</a
+      ><a name="1800" href="Induction.Nat.html#1800" class="Bound"
+      >&#8467;</a
+      ><a name="1801" class="Symbol"
+      >}</a
+      ><a name="1802"
+      > </a
+      ><a name="1803" class="Keyword"
+      >where</a
+      ><a name="1808"
+      >
+  </a
+      ><a name="1811" class="Keyword"
+      >open</a
+      ><a name="1815"
+      > </a
+      ><a name="1816" href="Induction.WellFounded.html#252" class="Module"
+      >WF.</a
+      ><a name="1819" href="Induction.WellFounded.html#1554" class="Module"
+      >All</a
+      ><a name="1822"
+      > </a
+      ><a name="1823" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="1837"
+      > </a
+      ><a name="1838" href="Induction.Nat.html#1800" class="Bound"
+      >&#8467;</a
+      ><a name="1839"
+      > </a
+      ><a name="1840" class="Keyword"
+      >public</a
+      ><a name="1846"
+      >
+    </a
+      ><a name="1851" class="Keyword"
+      >renaming</a
+      ><a name="1859"
+      > </a
+      ><a name="1860" class="Symbol"
+      >(</a
+      ><a name="1861"
+      > wfRec-builder </a
+      ><a name="1876" class="Symbol"
+      >to</a
+      ><a name="1878"
+      > &lt;-rec-builder
+             </a
+      ><a name="1906" class="Symbol"
+      >;</a
+      ><a name="1907"
+      > wfRec </a
+      ><a name="1914" class="Symbol"
+      >to</a
+      ><a name="1916"
+      > &lt;-rec
+             </a
+      ><a name="1936" class="Symbol"
+      >)</a
+      ><a name="1937"
+      >
+
+</a
+      ><a name="1939" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="2011"
+      >
+</a
+      ><a name="2012" class="Comment"
+      >-- Complete induction based on _&#8826;_</a
+      ><a name="2046"
+      >
+
+</a
+      ><a name="2048" href="Induction.Nat.html#2048" class="Function"
+      >&#8826;-Rec</a
+      ><a name="2053"
+      > </a
+      ><a name="2054" class="Symbol"
+      >:</a
+      ><a name="2055"
+      > </a
+      ><a name="2056" class="Symbol"
+      >&#8704;</a
+      ><a name="2057"
+      > </a
+      ><a name="2058" class="Symbol"
+      >{</a
+      ><a name="2059" href="Induction.Nat.html#2059" class="Bound"
+      >&#8467;</a
+      ><a name="2060" class="Symbol"
+      >}</a
+      ><a name="2061"
+      > </a
+      ><a name="2062" class="Symbol"
+      >&#8594;</a
+      ><a name="2063"
+      > </a
+      ><a name="2064" href="Induction.html#724" class="Function"
+      >RecStruct</a
+      ><a name="2073"
+      > </a
+      ><a name="2074" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="2075"
+      > </a
+      ><a name="2076" href="Induction.Nat.html#2059" class="Bound"
+      >&#8467;</a
+      ><a name="2077"
+      > </a
+      ><a name="2078" href="Induction.Nat.html#2059" class="Bound"
+      >&#8467;</a
+      ><a name="2079"
+      >
+</a
+      ><a name="2080" href="Induction.Nat.html#2048" class="Function"
+      >&#8826;-Rec</a
+      ><a name="2085"
+      > </a
+      ><a name="2086" class="Symbol"
+      >=</a
+      ><a name="2087"
+      > </a
+      ><a name="2088" href="Induction.WellFounded.html#530" class="Function"
+      >WfRec</a
+      ><a name="2093"
+      > </a
+      ><a name="2094" href="Data.Fin.html#4250" class="Datatype Operator"
+      >_&#8826;_</a
+      ><a name="2097"
+      >
+
+</a
+      ><a name="2099" href="Induction.Nat.html#2099" class="Function"
+      >&#8826;-well-founded</a
+      ><a name="2113"
+      > </a
+      ><a name="2114" class="Symbol"
+      >:</a
+      ><a name="2115"
+      > </a
+      ><a name="2116" href="Induction.WellFounded.html#1012" class="Function"
+      >Well-founded</a
+      ><a name="2128"
+      > </a
+      ><a name="2129" href="Data.Fin.html#4250" class="Datatype Operator"
+      >_&#8826;_</a
+      ><a name="2132"
+      >
+</a
+      ><a name="2133" href="Induction.Nat.html#2099" class="Function"
+      >&#8826;-well-founded</a
+      ><a name="2147"
+      > </a
+      ><a name="2148" class="Symbol"
+      >=</a
+      ><a name="2149"
+      > </a
+      ><a name="2150" href="Induction.WellFounded.html#2302" class="Function"
+      >Subrelation.well-founded</a
+      ><a name="2174"
+      > </a
+      ><a name="2175" href="Data.Fin.Props.html#3903" class="Function"
+      >&#8826;&#8658;&lt;&#8242;</a
+      ><a name="2179"
+      > </a
+      ><a name="2180" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="2194"
+      >
+
+</a
+      ><a name="2196" class="Keyword"
+      >module</a
+      ><a name="2202"
+      > </a
+      ><a name="2203" href="Induction.Nat.html#2203" class="Module"
+      >_</a
+      ><a name="2204"
+      > </a
+      ><a name="2205" class="Symbol"
+      >{</a
+      ><a name="2206" href="Induction.Nat.html#2206" class="Bound"
+      >&#8467;</a
+      ><a name="2207" class="Symbol"
+      >}</a
+      ><a name="2208"
+      > </a
+      ><a name="2209" class="Keyword"
+      >where</a
+      ><a name="2214"
+      >
+  </a
+      ><a name="2217" class="Keyword"
+      >open</a
+      ><a name="2221"
+      > </a
+      ><a name="2222" href="Induction.WellFounded.html#252" class="Module"
+      >WF.</a
+      ><a name="2225" href="Induction.WellFounded.html#1554" class="Module"
+      >All</a
+      ><a name="2228"
+      > </a
+      ><a name="2229" href="Induction.Nat.html#2099" class="Function"
+      >&#8826;-well-founded</a
+      ><a name="2243"
+      > </a
+      ><a name="2244" href="Induction.Nat.html#2206" class="Bound"
+      >&#8467;</a
+      ><a name="2245"
+      > </a
+      ><a name="2246" class="Keyword"
+      >public</a
+      ><a name="2252"
+      >
+    </a
+      ><a name="2257" class="Keyword"
+      >renaming</a
+      ><a name="2265"
+      > </a
+      ><a name="2266" class="Symbol"
+      >(</a
+      ><a name="2267"
+      > wfRec-builder </a
+      ><a name="2282" class="Symbol"
+      >to</a
+      ><a name="2284"
+      > &#8826;-rec-builder
+             </a
+      ><a name="2312" class="Symbol"
+      >;</a
+      ><a name="2313"
+      > wfRec </a
+      ><a name="2320" class="Symbol"
+      >to</a
+      ><a name="2322"
+      > &#8826;-rec
+             </a
+      ><a name="2342" class="Symbol"
+      >)</a
+      ><a name="2343"
+      >
+
+</a
+      ><a name="2345" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="2417"
+      >
+</a
+      ><a name="2418" class="Comment"
+      >-- Examples</a
+      ><a name="2429"
+      >
+
+</a
+      ><a name="2431" class="Keyword"
+      >private</a
+      ><a name="2438"
+      >
+
+ </a
+      ><a name="2441" class="Keyword"
+      >module</a
+      ><a name="2447"
+      > </a
+      ><a name="2448" href="Induction.Nat.html#2448" class="Module"
+      >Examples</a
+      ><a name="2456"
+      > </a
+      ><a name="2457" class="Keyword"
+      >where</a
+      ><a name="2462"
+      >
+
+  </a
+      ><a name="2466" class="Comment"
+      >-- Doubles its input.</a
+      ><a name="2487"
+      >
+
+  </a
+      ><a name="2491" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="2496"
+      > </a
+      ><a name="2497" class="Symbol"
+      >:</a
+      ><a name="2498"
+      > </a
+      ><a name="2499" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="2500"
+      > </a
+      ><a name="2501" class="Symbol"
+      >&#8594;</a
+      ><a name="2502"
+      > </a
+      ><a name="2503" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="2504"
+      >
+  </a
+      ><a name="2507" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="2512"
+      > </a
+      ><a name="2513" class="Symbol"
+      >=</a
+      ><a name="2514"
+      > </a
+      ><a name="2515" href="Induction.Nat.html#875" class="Function"
+      >rec</a
+      ><a name="2518"
+      > </a
+      ><a name="2519" class="Symbol"
+      >_</a
+      ><a name="2520"
+      > </a
+      ><a name="2521" class="Symbol"
+      >&#955;</a
+      ><a name="2522"
+      >
+    </a
+      ><a name="2527" class="Symbol"
+      >{</a
+      ><a name="2528"
+      > </a
+      ><a name="2529" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2533"
+      >    </a
+      ><a name="2537" class="Symbol"
+      >_</a
+      ><a name="2538"
+      >       </a
+      ><a name="2545" class="Symbol"
+      >&#8594;</a
+      ><a name="2546"
+      > </a
+      ><a name="2547" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2551"
+      >
+    </a
+      ><a name="2556" class="Symbol"
+      >;</a
+      ><a name="2557"
+      > </a
+      ><a name="2558" class="Symbol"
+      >(</a
+      ><a name="2559" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2562"
+      > </a
+      ><a name="2563" href="Induction.Nat.html#2563" class="Bound"
+      >n</a
+      ><a name="2564" class="Symbol"
+      >)</a
+      ><a name="2565"
+      > </a
+      ><a name="2566" href="Induction.Nat.html#2566" class="Bound"
+      >twice-n</a
+      ><a name="2573"
+      > </a
+      ><a name="2574" class="Symbol"
+      >&#8594;</a
+      ><a name="2575"
+      > </a
+      ><a name="2576" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2579"
+      > </a
+      ><a name="2580" class="Symbol"
+      >(</a
+      ><a name="2581" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2584"
+      > </a
+      ><a name="2585" href="Induction.Nat.html#2566" class="Bound"
+      >twice-n</a
+      ><a name="2592" class="Symbol"
+      >)</a
+      ><a name="2593"
+      >
+    </a
+      ><a name="2598" class="Symbol"
+      >}</a
+      ><a name="2599"
+      >
+
+  </a
+      ><a name="2603" class="Comment"
+      >-- Halves its input (rounding downwards).</a
+      ><a name="2644"
+      >
+  </a
+      ><a name="2647" class="Comment"
+      >--</a
+      ><a name="2649"
+      >
+  </a
+      ><a name="2652" class="Comment"
+      >-- The step function is mentioned in a proof below, so it has been</a
+      ><a name="2718"
+      >
+  </a
+      ><a name="2721" class="Comment"
+      >-- given a name. (The mutual keyword is used to avoid having to give</a
+      ><a name="2789"
+      >
+  </a
+      ><a name="2792" class="Comment"
+      >-- a type signature for the step function.)</a
+      ><a name="2835"
+      >
+
+  </a
+      ><a name="2839" class="Keyword"
+      >mutual</a
+      ><a name="2845"
+      >
+
+    </a
+      ><a name="2851" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="2861"
+      > </a
+      ><a name="2862" class="Symbol"
+      >=</a
+      ><a name="2863"
+      > </a
+      ><a name="2864" class="Symbol"
+      >&#955;</a
+      ><a name="2865"
+      >
+      </a
+      ><a name="2872" class="Symbol"
+      >{</a
+      ><a name="2873"
+      > </a
+      ><a name="2874" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2878"
+      >          </a
+      ><a name="2888" class="Symbol"
+      >_</a
+      ><a name="2889"
+      >                </a
+      ><a name="2905" class="Symbol"
+      >&#8594;</a
+      ><a name="2906"
+      > </a
+      ><a name="2907" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2911"
+      >
+      </a
+      ><a name="2918" class="Symbol"
+      >;</a
+      ><a name="2919"
+      > </a
+      ><a name="2920" class="Symbol"
+      >(</a
+      ><a name="2921" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2924"
+      > </a
+      ><a name="2925" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2929" class="Symbol"
+      >)</a
+      ><a name="2930"
+      >    </a
+      ><a name="2934" class="Symbol"
+      >_</a
+      ><a name="2935"
+      >                </a
+      ><a name="2951" class="Symbol"
+      >&#8594;</a
+      ><a name="2952"
+      > </a
+      ><a name="2953" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="2957"
+      >
+      </a
+      ><a name="2964" class="Symbol"
+      >;</a
+      ><a name="2965"
+      > </a
+      ><a name="2966" class="Symbol"
+      >(</a
+      ><a name="2967" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2970"
+      > </a
+      ><a name="2971" class="Symbol"
+      >(</a
+      ><a name="2972" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="2975"
+      > </a
+      ><a name="2976" href="Induction.Nat.html#2976" class="Bound"
+      >n</a
+      ><a name="2977" class="Symbol"
+      >))</a
+      ><a name="2979"
+      > </a
+      ><a name="2980" class="Symbol"
+      >(_</a
+      ><a name="2982"
+      > </a
+      ><a name="2983" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2984"
+      > </a
+      ><a name="2985" href="Induction.Nat.html#2985" class="Bound"
+      >half&#8321;n</a
+      ><a name="2991"
+      > </a
+      ><a name="2992" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="2993"
+      > </a
+      ><a name="2994" class="Symbol"
+      >_)</a
+      ><a name="2996"
+      > </a
+      ><a name="2997" class="Symbol"
+      >&#8594;</a
+      ><a name="2998"
+      > </a
+      ><a name="2999" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="3002"
+      > </a
+      ><a name="3003" href="Induction.Nat.html#2985" class="Bound"
+      >half&#8321;n</a
+      ><a name="3009"
+      >
+      </a
+      ><a name="3016" class="Symbol"
+      >}</a
+      ><a name="3017"
+      >
+
+    </a
+      ><a name="3023" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="3028"
+      > </a
+      ><a name="3029" class="Symbol"
+      >:</a
+      ><a name="3030"
+      > </a
+      ><a name="3031" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3032"
+      > </a
+      ><a name="3033" class="Symbol"
+      >&#8594;</a
+      ><a name="3034"
+      > </a
+      ><a name="3035" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3036"
+      >
+    </a
+      ><a name="3041" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="3046"
+      > </a
+      ><a name="3047" class="Symbol"
+      >=</a
+      ><a name="3048"
+      > </a
+      ><a name="3049" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="3053"
+      > </a
+      ><a name="3054" class="Symbol"
+      >_</a
+      ><a name="3055"
+      > </a
+      ><a name="3056" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3066"
+      >
+
+  </a
+      ><a name="3070" class="Comment"
+      >-- An alternative implementation of half&#8321;.</a
+      ><a name="3112"
+      >
+
+  </a
+      ><a name="3116" class="Keyword"
+      >mutual</a
+      ><a name="3122"
+      >
+
+    </a
+      ><a name="3128" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="3138"
+      > </a
+      ><a name="3139" class="Symbol"
+      >=</a
+      ><a name="3140"
+      > </a
+      ><a name="3141" class="Symbol"
+      >&#955;</a
+      ><a name="3142"
+      >
+      </a
+      ><a name="3149" class="Symbol"
+      >{</a
+      ><a name="3150"
+      > </a
+      ><a name="3151" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="3155"
+      >          </a
+      ><a name="3165" class="Symbol"
+      >_</a
+      ><a name="3166"
+      >   </a
+      ><a name="3169" class="Symbol"
+      >&#8594;</a
+      ><a name="3170"
+      > </a
+      ><a name="3171" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="3175"
+      >
+      </a
+      ><a name="3182" class="Symbol"
+      >;</a
+      ><a name="3183"
+      > </a
+      ><a name="3184" class="Symbol"
+      >(</a
+      ><a name="3185" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="3188"
+      > </a
+      ><a name="3189" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="3193" class="Symbol"
+      >)</a
+      ><a name="3194"
+      >    </a
+      ><a name="3198" class="Symbol"
+      >_</a
+      ><a name="3199"
+      >   </a
+      ><a name="3202" class="Symbol"
+      >&#8594;</a
+      ><a name="3203"
+      > </a
+      ><a name="3204" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="3208"
+      >
+      </a
+      ><a name="3215" class="Symbol"
+      >;</a
+      ><a name="3216"
+      > </a
+      ><a name="3217" class="Symbol"
+      >(</a
+      ><a name="3218" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="3221"
+      > </a
+      ><a name="3222" class="Symbol"
+      >(</a
+      ><a name="3223" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="3226"
+      > </a
+      ><a name="3227" href="Induction.Nat.html#3227" class="Bound"
+      >n</a
+      ><a name="3228" class="Symbol"
+      >))</a
+      ><a name="3230"
+      > </a
+      ><a name="3231" href="Induction.Nat.html#3231" class="Bound"
+      >rec</a
+      ><a name="3234"
+      > </a
+      ><a name="3235" class="Symbol"
+      >&#8594;</a
+      ><a name="3236"
+      > </a
+      ><a name="3237" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="3240"
+      > </a
+      ><a name="3241" class="Symbol"
+      >(</a
+      ><a name="3242" href="Induction.Nat.html#3231" class="Bound"
+      >rec</a
+      ><a name="3245"
+      > </a
+      ><a name="3246" href="Induction.Nat.html#3227" class="Bound"
+      >n</a
+      ><a name="3247"
+      > </a
+      ><a name="3248" class="Symbol"
+      >(</a
+      ><a name="3249" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="3256"
+      > </a
+      ><a name="3257" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="3264" class="Symbol"
+      >))</a
+      ><a name="3266"
+      >
+      </a
+      ><a name="3273" class="Symbol"
+      >}</a
+      ><a name="3274"
+      >
+
+    </a
+      ><a name="3280" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="3285"
+      > </a
+      ><a name="3286" class="Symbol"
+      >:</a
+      ><a name="3287"
+      > </a
+      ><a name="3288" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3289"
+      > </a
+      ><a name="3290" class="Symbol"
+      >&#8594;</a
+      ><a name="3291"
+      > </a
+      ><a name="3292" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3293"
+      >
+    </a
+      ><a name="3298" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="3303"
+      > </a
+      ><a name="3304" class="Symbol"
+      >=</a
+      ><a name="3305"
+      > </a
+      ><a name="3306" href="Induction.WellFounded.html#1751" class="Function"
+      >&lt;-rec</a
+      ><a name="3311"
+      > </a
+      ><a name="3312" class="Symbol"
+      >_</a
+      ><a name="3313"
+      > </a
+      ><a name="3314" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="3324"
+      >
+
+  </a
+      ><a name="3328" class="Comment"
+      >-- The application half&#8321;&#160;(2&#160;+&#160;n) is definitionally equal to</a
+      ><a name="3387"
+      >
+  </a
+      ><a name="3390" class="Comment"
+      >-- 1&#160;+&#160;half&#8321;&#160;n. Perhaps it is instructive to see why.</a
+      ><a name="3443"
+      >
+
+  </a
+      ><a name="3447" href="Induction.Nat.html#3447" class="Function"
+      >half&#8321;-2+</a
+      ><a name="3455"
+      > </a
+      ><a name="3456" class="Symbol"
+      >:</a
+      ><a name="3457"
+      > </a
+      ><a name="3458" class="Symbol"
+      >&#8704;</a
+      ><a name="3459"
+      > </a
+      ><a name="3460" href="Induction.Nat.html#3460" class="Bound"
+      >n</a
+      ><a name="3461"
+      > </a
+      ><a name="3462" class="Symbol"
+      >&#8594;</a
+      ><a name="3463"
+      > </a
+      ><a name="3464" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="3469"
+      > </a
+      ><a name="3470" class="Symbol"
+      >(</a
+      ><a name="3471" class="Number"
+      >2</a
+      ><a name="3472"
+      > </a
+      ><a name="3473" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3474"
+      > </a
+      ><a name="3475" href="Induction.Nat.html#3460" class="Bound"
+      >n</a
+      ><a name="3476" class="Symbol"
+      >)</a
+      ><a name="3477"
+      > </a
+      ><a name="3478" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="3479"
+      > </a
+      ><a name="3480" class="Number"
+      >1</a
+      ><a name="3481"
+      > </a
+      ><a name="3482" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3483"
+      > </a
+      ><a name="3484" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="3489"
+      > </a
+      ><a name="3490" href="Induction.Nat.html#3460" class="Bound"
+      >n</a
+      ><a name="3491"
+      >
+  </a
+      ><a name="3494" href="Induction.Nat.html#3447" class="Function"
+      >half&#8321;-2+</a
+      ><a name="3502"
+      > </a
+      ><a name="3503" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3504"
+      > </a
+      ><a name="3505" class="Symbol"
+      >=</a
+      ><a name="3506"
+      > </a
+      ><a name="3507" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >begin</a
+      ><a name="3512"
+      >
+
+    </a
+      ><a name="3518" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="3523"
+      > </a
+      ><a name="3524" class="Symbol"
+      >(</a
+      ><a name="3525" class="Number"
+      >2</a
+      ><a name="3526"
+      > </a
+      ><a name="3527" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3528"
+      > </a
+      ><a name="3529" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3530" class="Symbol"
+      >)</a
+      ><a name="3531"
+      >                                                         </a
+      ><a name="3588" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="3591"
+      >
+
+    </a
+      ><a name="3597" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="3601"
+      > </a
+      ><a name="3602" class="Symbol"
+      >(&#955;</a
+      ><a name="3604"
+      > </a
+      ><a name="3605" href="Induction.Nat.html#3605" class="Bound"
+      >_</a
+      ><a name="3606"
+      > </a
+      ><a name="3607" class="Symbol"
+      >&#8594;</a
+      ><a name="3608"
+      > </a
+      ><a name="3609" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3610" class="Symbol"
+      >)</a
+      ><a name="3611"
+      > </a
+      ><a name="3612" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3622"
+      > </a
+      ><a name="3623" class="Symbol"
+      >(</a
+      ><a name="3624" class="Number"
+      >2</a
+      ><a name="3625"
+      > </a
+      ><a name="3626" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3627"
+      > </a
+      ><a name="3628" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3629" class="Symbol"
+      >)</a
+      ><a name="3630"
+      >                                     </a
+      ><a name="3667" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="3670"
+      >
+
+    </a
+      ><a name="3676" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3686"
+      > </a
+      ><a name="3687" class="Symbol"
+      >(</a
+      ><a name="3688" class="Number"
+      >2</a
+      ><a name="3689"
+      > </a
+      ><a name="3690" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3691"
+      > </a
+      ><a name="3692" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3693" class="Symbol"
+      >)</a
+      ><a name="3694"
+      > </a
+      ><a name="3695" class="Symbol"
+      >(</a
+      ><a name="3696" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="3708"
+      > </a
+      ><a name="3709" class="Symbol"
+      >(&#955;</a
+      ><a name="3711"
+      > </a
+      ><a name="3712" href="Induction.Nat.html#3712" class="Bound"
+      >_</a
+      ><a name="3713"
+      > </a
+      ><a name="3714" class="Symbol"
+      >&#8594;</a
+      ><a name="3715"
+      > </a
+      ><a name="3716" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3717" class="Symbol"
+      >)</a
+      ><a name="3718"
+      > </a
+      ><a name="3719" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3729"
+      > </a
+      ><a name="3730" class="Symbol"
+      >(</a
+      ><a name="3731" class="Number"
+      >2</a
+      ><a name="3732"
+      > </a
+      ><a name="3733" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3734"
+      > </a
+      ><a name="3735" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3736" class="Symbol"
+      >))</a
+      ><a name="3738"
+      >        </a
+      ><a name="3746" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="3749"
+      >
+
+    </a
+      ><a name="3755" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3765"
+      > </a
+      ><a name="3766" class="Symbol"
+      >(</a
+      ><a name="3767" class="Number"
+      >2</a
+      ><a name="3768"
+      > </a
+      ><a name="3769" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3770"
+      > </a
+      ><a name="3771" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3772" class="Symbol"
+      >)</a
+      ><a name="3773"
+      >
+      </a
+      ><a name="3780" class="Symbol"
+      >(</a
+      ><a name="3781" class="Keyword"
+      >let</a
+      ><a name="3784"
+      > </a
+      ><a name="3785" href="Induction.Nat.html#3785" class="Bound"
+      >ih</a
+      ><a name="3787"
+      > </a
+      ><a name="3788" class="Symbol"
+      >=</a
+      ><a name="3789"
+      > </a
+      ><a name="3790" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="3802"
+      > </a
+      ><a name="3803" class="Symbol"
+      >(&#955;</a
+      ><a name="3805"
+      > </a
+      ><a name="3806" href="Induction.Nat.html#3806" class="Bound"
+      >_</a
+      ><a name="3807"
+      > </a
+      ><a name="3808" class="Symbol"
+      >&#8594;</a
+      ><a name="3809"
+      > </a
+      ><a name="3810" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3811" class="Symbol"
+      >)</a
+      ><a name="3812"
+      > </a
+      ><a name="3813" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3823"
+      > </a
+      ><a name="3824" class="Symbol"
+      >(</a
+      ><a name="3825" class="Number"
+      >1</a
+      ><a name="3826"
+      > </a
+      ><a name="3827" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3828"
+      > </a
+      ><a name="3829" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3830" class="Symbol"
+      >)</a
+      ><a name="3831"
+      > </a
+      ><a name="3832" class="Keyword"
+      >in</a
+      ><a name="3834"
+      >
+       </a
+      ><a name="3842" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3852"
+      > </a
+      ><a name="3853" class="Symbol"
+      >(</a
+      ><a name="3854" class="Number"
+      >1</a
+      ><a name="3855"
+      > </a
+      ><a name="3856" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3857"
+      > </a
+      ><a name="3858" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3859" class="Symbol"
+      >)</a
+      ><a name="3860"
+      > </a
+      ><a name="3861" href="Induction.Nat.html#3785" class="Bound"
+      >ih</a
+      ><a name="3863"
+      > </a
+      ><a name="3864" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="3865"
+      > </a
+      ><a name="3866" href="Induction.Nat.html#3785" class="Bound"
+      >ih</a
+      ><a name="3868" class="Symbol"
+      >)</a
+      ><a name="3869"
+      >                                        </a
+      ><a name="3909" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="3912"
+      >
+
+    </a
+      ><a name="3918" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3928"
+      > </a
+      ><a name="3929" class="Symbol"
+      >(</a
+      ><a name="3930" class="Number"
+      >2</a
+      ><a name="3931"
+      > </a
+      ><a name="3932" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="3933"
+      > </a
+      ><a name="3934" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3935" class="Symbol"
+      >)</a
+      ><a name="3936"
+      >
+      </a
+      ><a name="3943" class="Symbol"
+      >(</a
+      ><a name="3944" class="Keyword"
+      >let</a
+      ><a name="3947"
+      > </a
+      ><a name="3948" href="Induction.Nat.html#3948" class="Bound"
+      >ih</a
+      ><a name="3950"
+      > </a
+      ><a name="3951" class="Symbol"
+      >=</a
+      ><a name="3952"
+      > </a
+      ><a name="3953" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="3965"
+      > </a
+      ><a name="3966" class="Symbol"
+      >(&#955;</a
+      ><a name="3968"
+      > </a
+      ><a name="3969" href="Induction.Nat.html#3969" class="Bound"
+      >_</a
+      ><a name="3970"
+      > </a
+      ><a name="3971" class="Symbol"
+      >&#8594;</a
+      ><a name="3972"
+      > </a
+      ><a name="3973" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="3974" class="Symbol"
+      >)</a
+      ><a name="3975"
+      > </a
+      ><a name="3976" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="3986"
+      > </a
+      ><a name="3987" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="3988"
+      > </a
+      ><a name="3989" class="Keyword"
+      >in</a
+      ><a name="3991"
+      >
+       </a
+      ><a name="3999" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4009"
+      > </a
+      ><a name="4010" class="Symbol"
+      >(</a
+      ><a name="4011" class="Number"
+      >1</a
+      ><a name="4012"
+      > </a
+      ><a name="4013" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4014"
+      > </a
+      ><a name="4015" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4016" class="Symbol"
+      >)</a
+      ><a name="4017"
+      > </a
+      ><a name="4018" class="Symbol"
+      >(</a
+      ><a name="4019" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4029"
+      > </a
+      ><a name="4030" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4031"
+      > </a
+      ><a name="4032" href="Induction.Nat.html#3948" class="Bound"
+      >ih</a
+      ><a name="4034"
+      > </a
+      ><a name="4035" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4036"
+      > </a
+      ><a name="4037" href="Induction.Nat.html#3948" class="Bound"
+      >ih</a
+      ><a name="4039" class="Symbol"
+      >)</a
+      ><a name="4040"
+      > </a
+      ><a name="4041" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4042"
+      > </a
+      ><a name="4043" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4053"
+      > </a
+      ><a name="4054" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4055"
+      > </a
+      ><a name="4056" href="Induction.Nat.html#3948" class="Bound"
+      >ih</a
+      ><a name="4058"
+      > </a
+      ><a name="4059" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="4060"
+      > </a
+      ><a name="4061" href="Induction.Nat.html#3948" class="Bound"
+      >ih</a
+      ><a name="4063" class="Symbol"
+      >)</a
+      ><a name="4064"
+      >  </a
+      ><a name="4066" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4069"
+      >
+
+    </a
+      ><a name="4075" class="Number"
+      >1</a
+      ><a name="4076"
+      > </a
+      ><a name="4077" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4078"
+      > </a
+      ><a name="4079" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4089"
+      > </a
+      ><a name="4090" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4091"
+      > </a
+      ><a name="4092" class="Symbol"
+      >(</a
+      ><a name="4093" href="Induction.Nat.html#1119" class="Function"
+      >cRec-builder</a
+      ><a name="4105"
+      > </a
+      ><a name="4106" class="Symbol"
+      >(&#955;</a
+      ><a name="4108"
+      > </a
+      ><a name="4109" href="Induction.Nat.html#4109" class="Bound"
+      >_</a
+      ><a name="4110"
+      > </a
+      ><a name="4111" class="Symbol"
+      >&#8594;</a
+      ><a name="4112"
+      > </a
+      ><a name="4113" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4114" class="Symbol"
+      >)</a
+      ><a name="4115"
+      > </a
+      ><a name="4116" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4126"
+      > </a
+      ><a name="4127" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4128" class="Symbol"
+      >)</a
+      ><a name="4129"
+      >                </a
+      ><a name="4145" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4148"
+      >
+
+    </a
+      ><a name="4154" class="Number"
+      >1</a
+      ><a name="4155"
+      > </a
+      ><a name="4156" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4157"
+      > </a
+      ><a name="4158" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="4162"
+      > </a
+      ><a name="4163" class="Symbol"
+      >(&#955;</a
+      ><a name="4165"
+      > </a
+      ><a name="4166" href="Induction.Nat.html#4166" class="Bound"
+      >_</a
+      ><a name="4167"
+      > </a
+      ><a name="4168" class="Symbol"
+      >&#8594;</a
+      ><a name="4169"
+      > </a
+      ><a name="4170" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4171" class="Symbol"
+      >)</a
+      ><a name="4172"
+      > </a
+      ><a name="4173" href="Induction.Nat.html#2851" class="Function"
+      >half&#8321;-step</a
+      ><a name="4183"
+      > </a
+      ><a name="4184" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4185"
+      >                                       </a
+      ><a name="4224" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4227"
+      >
+
+    </a
+      ><a name="4233" class="Number"
+      >1</a
+      ><a name="4234"
+      > </a
+      ><a name="4235" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4236"
+      > </a
+      ><a name="4237" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="4242"
+      > </a
+      ><a name="4243" href="Induction.Nat.html#3503" class="Bound"
+      >n</a
+      ><a name="4244"
+      >                                                           </a
+      ><a name="4303" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#8718;</a
+      ><a name="4304"
+      >
+
+    </a
+      ><a name="4310" class="Keyword"
+      >where</a
+      ><a name="4315"
+      > </a
+      ><a name="4316" class="Keyword"
+      >open</a
+      ><a name="4320"
+      > </a
+      ><a name="4321" href="Relation.Binary.PropositionalEquality.html#4851" class="Module"
+      >&#8801;-Reasoning</a
+      ><a name="4332"
+      >
+
+  </a
+      ><a name="4336" class="Comment"
+      >-- The application half&#8322;&#160;(2&#160;+&#160;n) is definitionally equal to</a
+      ><a name="4395"
+      >
+  </a
+      ><a name="4398" class="Comment"
+      >-- 1&#160;+&#160;half&#8322;&#160;n. Perhaps it is instructive to see why.</a
+      ><a name="4451"
+      >
+
+  </a
+      ><a name="4455" href="Induction.Nat.html#4455" class="Function"
+      >half&#8322;-2+</a
+      ><a name="4463"
+      > </a
+      ><a name="4464" class="Symbol"
+      >:</a
+      ><a name="4465"
+      > </a
+      ><a name="4466" class="Symbol"
+      >&#8704;</a
+      ><a name="4467"
+      > </a
+      ><a name="4468" href="Induction.Nat.html#4468" class="Bound"
+      >n</a
+      ><a name="4469"
+      > </a
+      ><a name="4470" class="Symbol"
+      >&#8594;</a
+      ><a name="4471"
+      > </a
+      ><a name="4472" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="4477"
+      > </a
+      ><a name="4478" class="Symbol"
+      >(</a
+      ><a name="4479" class="Number"
+      >2</a
+      ><a name="4480"
+      > </a
+      ><a name="4481" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4482"
+      > </a
+      ><a name="4483" href="Induction.Nat.html#4468" class="Bound"
+      >n</a
+      ><a name="4484" class="Symbol"
+      >)</a
+      ><a name="4485"
+      > </a
+      ><a name="4486" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="4487"
+      > </a
+      ><a name="4488" class="Number"
+      >1</a
+      ><a name="4489"
+      > </a
+      ><a name="4490" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4491"
+      > </a
+      ><a name="4492" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="4497"
+      > </a
+      ><a name="4498" href="Induction.Nat.html#4468" class="Bound"
+      >n</a
+      ><a name="4499"
+      >
+  </a
+      ><a name="4502" href="Induction.Nat.html#4455" class="Function"
+      >half&#8322;-2+</a
+      ><a name="4510"
+      > </a
+      ><a name="4511" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4512"
+      > </a
+      ><a name="4513" class="Symbol"
+      >=</a
+      ><a name="4514"
+      > </a
+      ><a name="4515" href="Relation.Binary.PreorderReasoning.html#1154" class="Function Operator"
+      >begin</a
+      ><a name="4520"
+      >
+
+    </a
+      ><a name="4526" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="4531"
+      > </a
+      ><a name="4532" class="Symbol"
+      >(</a
+      ><a name="4533" class="Number"
+      >2</a
+      ><a name="4534"
+      > </a
+      ><a name="4535" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4536"
+      > </a
+      ><a name="4537" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4538" class="Symbol"
+      >)</a
+      ><a name="4539"
+      >                                                         </a
+      ><a name="4596" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4599"
+      >
+
+    </a
+      ><a name="4605" href="Induction.WellFounded.html#1751" class="Function"
+      >&lt;-rec</a
+      ><a name="4610"
+      > </a
+      ><a name="4611" class="Symbol"
+      >(&#955;</a
+      ><a name="4613"
+      > </a
+      ><a name="4614" href="Induction.Nat.html#4614" class="Bound"
+      >_</a
+      ><a name="4615"
+      > </a
+      ><a name="4616" class="Symbol"
+      >&#8594;</a
+      ><a name="4617"
+      > </a
+      ><a name="4618" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4619" class="Symbol"
+      >)</a
+      ><a name="4620"
+      > </a
+      ><a name="4621" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="4631"
+      > </a
+      ><a name="4632" class="Symbol"
+      >(</a
+      ><a name="4633" class="Number"
+      >2</a
+      ><a name="4634"
+      > </a
+      ><a name="4635" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4636"
+      > </a
+      ><a name="4637" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4638" class="Symbol"
+      >)</a
+      ><a name="4639"
+      >                                    </a
+      ><a name="4675" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4678"
+      >
+
+    </a
+      ><a name="4684" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="4694"
+      > </a
+      ><a name="4695" class="Symbol"
+      >(</a
+      ><a name="4696" class="Number"
+      >2</a
+      ><a name="4697"
+      > </a
+      ><a name="4698" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4699"
+      > </a
+      ><a name="4700" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4701" class="Symbol"
+      >)</a
+      ><a name="4702"
+      > </a
+      ><a name="4703" class="Symbol"
+      >(</a
+      ><a name="4704" href="Induction.WellFounded.html#1640" class="Function"
+      >&lt;-rec-builder</a
+      ><a name="4717"
+      > </a
+      ><a name="4718" class="Symbol"
+      >(&#955;</a
+      ><a name="4720"
+      > </a
+      ><a name="4721" href="Induction.Nat.html#4721" class="Bound"
+      >_</a
+      ><a name="4722"
+      > </a
+      ><a name="4723" class="Symbol"
+      >&#8594;</a
+      ><a name="4724"
+      > </a
+      ><a name="4725" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4726" class="Symbol"
+      >)</a
+      ><a name="4727"
+      > </a
+      ><a name="4728" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="4738"
+      > </a
+      ><a name="4739" class="Symbol"
+      >(</a
+      ><a name="4740" class="Number"
+      >2</a
+      ><a name="4741"
+      > </a
+      ><a name="4742" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4743"
+      > </a
+      ><a name="4744" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4745" class="Symbol"
+      >))</a
+      ><a name="4747"
+      >       </a
+      ><a name="4754" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4757"
+      >
+
+    </a
+      ><a name="4763" class="Number"
+      >1</a
+      ><a name="4764"
+      > </a
+      ><a name="4765" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4766"
+      > </a
+      ><a name="4767" href="Induction.WellFounded.html#1640" class="Function"
+      >&lt;-rec-builder</a
+      ><a name="4780"
+      > </a
+      ><a name="4781" class="Symbol"
+      >(&#955;</a
+      ><a name="4783"
+      > </a
+      ><a name="4784" href="Induction.Nat.html#4784" class="Bound"
+      >_</a
+      ><a name="4785"
+      > </a
+      ><a name="4786" class="Symbol"
+      >&#8594;</a
+      ><a name="4787"
+      > </a
+      ><a name="4788" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4789" class="Symbol"
+      >)</a
+      ><a name="4790"
+      > </a
+      ><a name="4791" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="4801"
+      > </a
+      ><a name="4802" class="Symbol"
+      >(</a
+      ><a name="4803" class="Number"
+      >2</a
+      ><a name="4804"
+      > </a
+      ><a name="4805" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4806"
+      > </a
+      ><a name="4807" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4808" class="Symbol"
+      >)</a
+      ><a name="4809"
+      > </a
+      ><a name="4810" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4811"
+      > </a
+      ><a name="4812" class="Symbol"
+      >(</a
+      ><a name="4813" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="4820"
+      > </a
+      ><a name="4821" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="4828" class="Symbol"
+      >)</a
+      ><a name="4829"
+      >    </a
+      ><a name="4833" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4836"
+      >
+
+    </a
+      ><a name="4842" class="Number"
+      >1</a
+      ><a name="4843"
+      > </a
+      ><a name="4844" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4845"
+      > </a
+      ><a name="4846" href="Induction.WellFounded.html#1228" class="Function"
+      >Some.wfRec-builder</a
+      ><a name="4864"
+      > </a
+      ><a name="4865" class="Symbol"
+      >(&#955;</a
+      ><a name="4867"
+      > </a
+      ><a name="4868" href="Induction.Nat.html#4868" class="Bound"
+      >_</a
+      ><a name="4869"
+      > </a
+      ><a name="4870" class="Symbol"
+      >&#8594;</a
+      ><a name="4871"
+      > </a
+      ><a name="4872" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="4873" class="Symbol"
+      >)</a
+      ><a name="4874"
+      > </a
+      ><a name="4875" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="4885"
+      > </a
+      ><a name="4886" class="Symbol"
+      >(</a
+      ><a name="4887" class="Number"
+      >2</a
+      ><a name="4888"
+      > </a
+      ><a name="4889" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4890"
+      > </a
+      ><a name="4891" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4892" class="Symbol"
+      >)</a
+      ><a name="4893"
+      >
+          </a
+      ><a name="4904" class="Symbol"
+      >(</a
+      ><a name="4905" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="4919"
+      > </a
+      ><a name="4920" class="Symbol"
+      >(</a
+      ><a name="4921" class="Number"
+      >2</a
+      ><a name="4922"
+      > </a
+      ><a name="4923" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4924"
+      > </a
+      ><a name="4925" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4926" class="Symbol"
+      >))</a
+      ><a name="4928"
+      > </a
+      ><a name="4929" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="4930"
+      > </a
+      ><a name="4931" class="Symbol"
+      >(</a
+      ><a name="4932" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="4939"
+      > </a
+      ><a name="4940" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="4947" class="Symbol"
+      >)</a
+      ><a name="4948"
+      >                    </a
+      ><a name="4968" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="4971"
+      >
+
+    </a
+      ><a name="4977" class="Number"
+      >1</a
+      ><a name="4978"
+      > </a
+      ><a name="4979" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="4980"
+      > </a
+      ><a name="4981" href="Induction.WellFounded.html#1228" class="Function"
+      >Some.wfRec-builder</a
+      ><a name="4999"
+      > </a
+      ><a name="5000" class="Symbol"
+      >(&#955;</a
+      ><a name="5002"
+      > </a
+      ><a name="5003" href="Induction.Nat.html#5003" class="Bound"
+      >_</a
+      ><a name="5004"
+      > </a
+      ><a name="5005" class="Symbol"
+      >&#8594;</a
+      ><a name="5006"
+      > </a
+      ><a name="5007" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5008" class="Symbol"
+      >)</a
+      ><a name="5009"
+      > </a
+      ><a name="5010" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5020"
+      > </a
+      ><a name="5021" class="Symbol"
+      >(</a
+      ><a name="5022" class="Number"
+      >2</a
+      ><a name="5023"
+      > </a
+      ><a name="5024" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5025"
+      > </a
+      ><a name="5026" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5027" class="Symbol"
+      >)</a
+      ><a name="5028"
+      >
+          </a
+      ><a name="5039" class="Symbol"
+      >(</a
+      ><a name="5040" href="Induction.WellFounded.html#826" class="InductiveConstructor"
+      >acc</a
+      ><a name="5043"
+      > </a
+      ><a name="5044" class="Symbol"
+      >(</a
+      ><a name="5045" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="5060"
+      > </a
+      ><a name="5061" class="Symbol"
+      >(</a
+      ><a name="5062" class="Number"
+      >2</a
+      ><a name="5063"
+      > </a
+      ><a name="5064" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5065"
+      > </a
+      ><a name="5066" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5067" class="Symbol"
+      >)))</a
+      ><a name="5070"
+      > </a
+      ><a name="5071" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5072"
+      > </a
+      ><a name="5073" class="Symbol"
+      >(</a
+      ><a name="5074" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="5081"
+      > </a
+      ><a name="5082" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="5089" class="Symbol"
+      >)</a
+      ><a name="5090"
+      >             </a
+      ><a name="5103" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5106"
+      >
+
+    </a
+      ><a name="5112" class="Number"
+      >1</a
+      ><a name="5113"
+      > </a
+      ><a name="5114" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5115"
+      > </a
+      ><a name="5116" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5126"
+      > </a
+      ><a name="5127" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5128"
+      >
+          </a
+      ><a name="5139" class="Symbol"
+      >(</a
+      ><a name="5140" href="Induction.WellFounded.html#1228" class="Function"
+      >Some.wfRec-builder</a
+      ><a name="5158"
+      > </a
+      ><a name="5159" class="Symbol"
+      >(&#955;</a
+      ><a name="5161"
+      > </a
+      ><a name="5162" href="Induction.Nat.html#5162" class="Bound"
+      >_</a
+      ><a name="5163"
+      > </a
+      ><a name="5164" class="Symbol"
+      >&#8594;</a
+      ><a name="5165"
+      > </a
+      ><a name="5166" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5167" class="Symbol"
+      >)</a
+      ><a name="5168"
+      > </a
+      ><a name="5169" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5179"
+      > </a
+      ><a name="5180" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5181"
+      >
+             </a
+      ><a name="5195" class="Symbol"
+      >(</a
+      ><a name="5196" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="5211"
+      > </a
+      ><a name="5212" class="Symbol"
+      >(</a
+      ><a name="5213" class="Number"
+      >2</a
+      ><a name="5214"
+      > </a
+      ><a name="5215" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5216"
+      > </a
+      ><a name="5217" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5218" class="Symbol"
+      >)</a
+      ><a name="5219"
+      > </a
+      ><a name="5220" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5221"
+      > </a
+      ><a name="5222" class="Symbol"
+      >(</a
+      ><a name="5223" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="5230"
+      > </a
+      ><a name="5231" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="5238" class="Symbol"
+      >)))</a
+      ><a name="5241"
+      >               </a
+      ><a name="5256" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5259"
+      >
+
+    </a
+      ><a name="5265" class="Number"
+      >1</a
+      ><a name="5266"
+      > </a
+      ><a name="5267" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5268"
+      > </a
+      ><a name="5269" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5279"
+      > </a
+      ><a name="5280" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5281"
+      >
+          </a
+      ><a name="5292" class="Symbol"
+      >(</a
+      ><a name="5293" href="Induction.WellFounded.html#1228" class="Function"
+      >Some.wfRec-builder</a
+      ><a name="5311"
+      > </a
+      ><a name="5312" class="Symbol"
+      >(&#955;</a
+      ><a name="5314"
+      > </a
+      ><a name="5315" href="Induction.Nat.html#5315" class="Bound"
+      >_</a
+      ><a name="5316"
+      > </a
+      ><a name="5317" class="Symbol"
+      >&#8594;</a
+      ><a name="5318"
+      > </a
+      ><a name="5319" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5320" class="Symbol"
+      >)</a
+      ><a name="5321"
+      > </a
+      ><a name="5322" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5332"
+      > </a
+      ><a name="5333" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5334"
+      >
+             </a
+      ><a name="5348" class="Symbol"
+      >(</a
+      ><a name="5349" href="Induction.Nat.html#1583" class="Function"
+      >&lt;-well-founded&#8242;</a
+      ><a name="5364"
+      > </a
+      ><a name="5365" class="Symbol"
+      >(</a
+      ><a name="5366" class="Number"
+      >1</a
+      ><a name="5367"
+      > </a
+      ><a name="5368" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5369"
+      > </a
+      ><a name="5370" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5371" class="Symbol"
+      >)</a
+      ><a name="5372"
+      > </a
+      ><a name="5373" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5374"
+      > </a
+      ><a name="5375" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="5382" class="Symbol"
+      >))</a
+      ><a name="5384"
+      >                         </a
+      ><a name="5409" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5412"
+      >
+
+    </a
+      ><a name="5418" class="Number"
+      >1</a
+      ><a name="5419"
+      > </a
+      ><a name="5420" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5421"
+      > </a
+      ><a name="5422" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5432"
+      > </a
+      ><a name="5433" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5434"
+      >
+          </a
+      ><a name="5445" class="Symbol"
+      >(</a
+      ><a name="5446" href="Induction.WellFounded.html#1228" class="Function"
+      >Some.wfRec-builder</a
+      ><a name="5464"
+      > </a
+      ><a name="5465" class="Symbol"
+      >(&#955;</a
+      ><a name="5467"
+      > </a
+      ><a name="5468" href="Induction.Nat.html#5468" class="Bound"
+      >_</a
+      ><a name="5469"
+      > </a
+      ><a name="5470" class="Symbol"
+      >&#8594;</a
+      ><a name="5471"
+      > </a
+      ><a name="5472" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5473" class="Symbol"
+      >)</a
+      ><a name="5474"
+      > </a
+      ><a name="5475" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5485"
+      > </a
+      ><a name="5486" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5487"
+      > </a
+      ><a name="5488" class="Symbol"
+      >(</a
+      ><a name="5489" href="Induction.Nat.html#1500" class="Function"
+      >&lt;-well-founded</a
+      ><a name="5503"
+      > </a
+      ><a name="5504" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5505" class="Symbol"
+      >))</a
+      ><a name="5507"
+      >  </a
+      ><a name="5509" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5512"
+      >
+
+    </a
+      ><a name="5518" class="Number"
+      >1</a
+      ><a name="5519"
+      > </a
+      ><a name="5520" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5521"
+      > </a
+      ><a name="5522" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5532"
+      > </a
+      ><a name="5533" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5534"
+      > </a
+      ><a name="5535" class="Symbol"
+      >(</a
+      ><a name="5536" href="Induction.WellFounded.html#1640" class="Function"
+      >&lt;-rec-builder</a
+      ><a name="5549"
+      > </a
+      ><a name="5550" class="Symbol"
+      >(&#955;</a
+      ><a name="5552"
+      > </a
+      ><a name="5553" href="Induction.Nat.html#5553" class="Bound"
+      >_</a
+      ><a name="5554"
+      > </a
+      ><a name="5555" class="Symbol"
+      >&#8594;</a
+      ><a name="5556"
+      > </a
+      ><a name="5557" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5558" class="Symbol"
+      >)</a
+      ><a name="5559"
+      > </a
+      ><a name="5560" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5570"
+      > </a
+      ><a name="5571" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5572" class="Symbol"
+      >)</a
+      ><a name="5573"
+      >               </a
+      ><a name="5588" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5591"
+      >
+
+    </a
+      ><a name="5597" class="Number"
+      >1</a
+      ><a name="5598"
+      > </a
+      ><a name="5599" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5600"
+      > </a
+      ><a name="5601" href="Induction.WellFounded.html#1751" class="Function"
+      >&lt;-rec</a
+      ><a name="5606"
+      > </a
+      ><a name="5607" class="Symbol"
+      >(&#955;</a
+      ><a name="5609"
+      > </a
+      ><a name="5610" href="Induction.Nat.html#5610" class="Bound"
+      >_</a
+      ><a name="5611"
+      > </a
+      ><a name="5612" class="Symbol"
+      >&#8594;</a
+      ><a name="5613"
+      > </a
+      ><a name="5614" href="Data.Nat.html#698" class="Datatype"
+      >&#8469;</a
+      ><a name="5615" class="Symbol"
+      >)</a
+      ><a name="5616"
+      > </a
+      ><a name="5617" href="Induction.Nat.html#3128" class="Function"
+      >half&#8322;-step</a
+      ><a name="5627"
+      > </a
+      ><a name="5628" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5629"
+      >                                      </a
+      ><a name="5667" href="Relation.Binary.PreorderReasoning.html#1450" class="Function Operator"
+      >&#8801;&#10216;&#10217;</a
+      ><a name="5670"
+      >
+
+    </a
+      ><a name="5676" class="Number"
+      >1</a
+      ><a name="5677"
+      > </a
+      ><a name="5678" href="Data.Nat.html#2178" class="Primitive Operator"
+      >+</a
+      ><a name="5679"
+      > </a
+      ><a name="5680" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="5685"
+      > </a
+      ><a name="5686" href="Induction.Nat.html#4511" class="Bound"
+      >n</a
+      ><a name="5687"
+      >                                                           </a
+      ><a name="5746" href="Relation.Binary.PreorderReasoning.html#1519" class="Function Operator"
+      >&#8718;</a
+      ><a name="5747"
+      >
+
+    </a
+      ><a name="5753" class="Keyword"
+      >where</a
+      ><a name="5758"
+      > </a
+      ><a name="5759" class="Keyword"
+      >open</a
+      ><a name="5763"
+      > </a
+      ><a name="5764" href="Relation.Binary.PropositionalEquality.html#4851" class="Module"
+      >&#8801;-Reasoning</a
+      ><a name="5775"
+      >
+
+  </a
+      ><a name="5779" class="Comment"
+      >-- Some properties that the functions above satisfy, proved using</a
+      ><a name="5844"
+      >
+  </a
+      ><a name="5847" class="Comment"
+      >-- cRec.</a
+      ><a name="5855"
+      >
+
+  </a
+      ><a name="5859" href="Induction.Nat.html#5859" class="Function"
+      >half&#8321;-+&#8321;</a
+      ><a name="5867"
+      > </a
+      ><a name="5868" class="Symbol"
+      >:</a
+      ><a name="5869"
+      > </a
+      ><a name="5870" class="Symbol"
+      >&#8704;</a
+      ><a name="5871"
+      > </a
+      ><a name="5872" href="Induction.Nat.html#5872" class="Bound"
+      >n</a
+      ><a name="5873"
+      > </a
+      ><a name="5874" class="Symbol"
+      >&#8594;</a
+      ><a name="5875"
+      > </a
+      ><a name="5876" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="5881"
+      > </a
+      ><a name="5882" class="Symbol"
+      >(</a
+      ><a name="5883" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="5888"
+      > </a
+      ><a name="5889" href="Induction.Nat.html#5872" class="Bound"
+      >n</a
+      ><a name="5890" class="Symbol"
+      >)</a
+      ><a name="5891"
+      > </a
+      ><a name="5892" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="5893"
+      > </a
+      ><a name="5894" href="Induction.Nat.html#5872" class="Bound"
+      >n</a
+      ><a name="5895"
+      >
+  </a
+      ><a name="5898" href="Induction.Nat.html#5859" class="Function"
+      >half&#8321;-+&#8321;</a
+      ><a name="5906"
+      > </a
+      ><a name="5907" class="Symbol"
+      >=</a
+      ><a name="5908"
+      > </a
+      ><a name="5909" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="5913"
+      > </a
+      ><a name="5914" class="Symbol"
+      >_</a
+      ><a name="5915"
+      > </a
+      ><a name="5916" class="Symbol"
+      >&#955;</a
+      ><a name="5917"
+      >
+    </a
+      ><a name="5922" class="Symbol"
+      >{</a
+      ><a name="5923"
+      > </a
+      ><a name="5924" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="5928"
+      >          </a
+      ><a name="5938" class="Symbol"
+      >_</a
+      ><a name="5939"
+      >                        </a
+      ><a name="5963" class="Symbol"
+      >&#8594;</a
+      ><a name="5964"
+      > </a
+      ><a name="5965" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="5969"
+      >
+    </a
+      ><a name="5974" class="Symbol"
+      >;</a
+      ><a name="5975"
+      > </a
+      ><a name="5976" class="Symbol"
+      >(</a
+      ><a name="5977" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="5980"
+      > </a
+      ><a name="5981" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="5985" class="Symbol"
+      >)</a
+      ><a name="5986"
+      >    </a
+      ><a name="5990" class="Symbol"
+      >_</a
+      ><a name="5991"
+      >                        </a
+      ><a name="6015" class="Symbol"
+      >&#8594;</a
+      ><a name="6016"
+      > </a
+      ><a name="6017" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6021"
+      >
+    </a
+      ><a name="6026" class="Symbol"
+      >;</a
+      ><a name="6027"
+      > </a
+      ><a name="6028" class="Symbol"
+      >(</a
+      ><a name="6029" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6032"
+      > </a
+      ><a name="6033" class="Symbol"
+      >(</a
+      ><a name="6034" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6037"
+      > </a
+      ><a name="6038" href="Induction.Nat.html#6038" class="Bound"
+      >n</a
+      ><a name="6039" class="Symbol"
+      >))</a
+      ><a name="6041"
+      > </a
+      ><a name="6042" class="Symbol"
+      >(_</a
+      ><a name="6044"
+      > </a
+      ><a name="6045" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6046"
+      > </a
+      ><a name="6047" href="Induction.Nat.html#6047" class="Bound"
+      >half&#8321;twice-n&#8801;n</a
+      ><a name="6061"
+      > </a
+      ><a name="6062" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6063"
+      > </a
+      ><a name="6064" class="Symbol"
+      >_)</a
+      ><a name="6066"
+      > </a
+      ><a name="6067" class="Symbol"
+      >&#8594;</a
+      ><a name="6068"
+      >
+        </a
+      ><a name="6077" href="Relation.Binary.PropositionalEquality.html#1034" class="Function"
+      >cong</a
+      ><a name="6081"
+      > </a
+      ><a name="6082" class="Symbol"
+      >(</a
+      ><a name="6083" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6086"
+      > </a
+      ><a name="6087" href="Function.html#713" class="Function Operator"
+      >&#8728;</a
+      ><a name="6088"
+      > </a
+      ><a name="6089" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6092" class="Symbol"
+      >)</a
+      ><a name="6093"
+      > </a
+      ><a name="6094" href="Induction.Nat.html#6047" class="Bound"
+      >half&#8321;twice-n&#8801;n</a
+      ><a name="6108"
+      >
+    </a
+      ><a name="6113" class="Symbol"
+      >}</a
+      ><a name="6114"
+      >
+
+  </a
+      ><a name="6118" href="Induction.Nat.html#6118" class="Function"
+      >half&#8322;-+&#8321;</a
+      ><a name="6126"
+      > </a
+      ><a name="6127" class="Symbol"
+      >:</a
+      ><a name="6128"
+      > </a
+      ><a name="6129" class="Symbol"
+      >&#8704;</a
+      ><a name="6130"
+      > </a
+      ><a name="6131" href="Induction.Nat.html#6131" class="Bound"
+      >n</a
+      ><a name="6132"
+      > </a
+      ><a name="6133" class="Symbol"
+      >&#8594;</a
+      ><a name="6134"
+      > </a
+      ><a name="6135" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="6140"
+      > </a
+      ><a name="6141" class="Symbol"
+      >(</a
+      ><a name="6142" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="6147"
+      > </a
+      ><a name="6148" href="Induction.Nat.html#6131" class="Bound"
+      >n</a
+      ><a name="6149" class="Symbol"
+      >)</a
+      ><a name="6150"
+      > </a
+      ><a name="6151" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="6152"
+      > </a
+      ><a name="6153" href="Induction.Nat.html#6131" class="Bound"
+      >n</a
+      ><a name="6154"
+      >
+  </a
+      ><a name="6157" href="Induction.Nat.html#6118" class="Function"
+      >half&#8322;-+&#8321;</a
+      ><a name="6165"
+      > </a
+      ><a name="6166" class="Symbol"
+      >=</a
+      ><a name="6167"
+      > </a
+      ><a name="6168" href="Induction.Nat.html#1268" class="Function"
+      >cRec</a
+      ><a name="6172"
+      > </a
+      ><a name="6173" class="Symbol"
+      >_</a
+      ><a name="6174"
+      > </a
+      ><a name="6175" class="Symbol"
+      >&#955;</a
+      ><a name="6176"
+      >
+    </a
+      ><a name="6181" class="Symbol"
+      >{</a
+      ><a name="6182"
+      > </a
+      ><a name="6183" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6187"
+      >          </a
+      ><a name="6197" class="Symbol"
+      >_</a
+      ><a name="6198"
+      >                        </a
+      ><a name="6222" class="Symbol"
+      >&#8594;</a
+      ><a name="6223"
+      > </a
+      ><a name="6224" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6228"
+      >
+    </a
+      ><a name="6233" class="Symbol"
+      >;</a
+      ><a name="6234"
+      > </a
+      ><a name="6235" class="Symbol"
+      >(</a
+      ><a name="6236" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6239"
+      > </a
+      ><a name="6240" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6244" class="Symbol"
+      >)</a
+      ><a name="6245"
+      >    </a
+      ><a name="6249" class="Symbol"
+      >_</a
+      ><a name="6250"
+      >                        </a
+      ><a name="6274" class="Symbol"
+      >&#8594;</a
+      ><a name="6275"
+      > </a
+      ><a name="6276" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6280"
+      >
+    </a
+      ><a name="6285" class="Symbol"
+      >;</a
+      ><a name="6286"
+      > </a
+      ><a name="6287" class="Symbol"
+      >(</a
+      ><a name="6288" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6291"
+      > </a
+      ><a name="6292" class="Symbol"
+      >(</a
+      ><a name="6293" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6296"
+      > </a
+      ><a name="6297" href="Induction.Nat.html#6297" class="Bound"
+      >n</a
+      ><a name="6298" class="Symbol"
+      >))</a
+      ><a name="6300"
+      > </a
+      ><a name="6301" class="Symbol"
+      >(_</a
+      ><a name="6303"
+      > </a
+      ><a name="6304" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6305"
+      > </a
+      ><a name="6306" href="Induction.Nat.html#6306" class="Bound"
+      >half&#8321;twice-n&#8801;n</a
+      ><a name="6320"
+      > </a
+      ><a name="6321" href="Data.Product.html#509" class="InductiveConstructor Operator"
+      >,</a
+      ><a name="6322"
+      > </a
+      ><a name="6323" class="Symbol"
+      >_)</a
+      ><a name="6325"
+      > </a
+      ><a name="6326" class="Symbol"
+      >&#8594;</a
+      ><a name="6327"
+      >
+        </a
+      ><a name="6336" href="Relation.Binary.PropositionalEquality.html#1034" class="Function"
+      >cong</a
+      ><a name="6340"
+      > </a
+      ><a name="6341" class="Symbol"
+      >(</a
+      ><a name="6342" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6345"
+      > </a
+      ><a name="6346" href="Function.html#713" class="Function Operator"
+      >&#8728;</a
+      ><a name="6347"
+      > </a
+      ><a name="6348" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6351" class="Symbol"
+      >)</a
+      ><a name="6352"
+      > </a
+      ><a name="6353" href="Induction.Nat.html#6306" class="Bound"
+      >half&#8321;twice-n&#8801;n</a
+      ><a name="6367"
+      >
+    </a
+      ><a name="6372" class="Symbol"
+      >}</a
+      ><a name="6373"
+      >
+
+  </a
+      ><a name="6377" class="Comment"
+      >-- Some properties that the functions above satisfy, proved using</a
+      ><a name="6442"
+      >
+  </a
+      ><a name="6445" class="Comment"
+      >-- &lt;-rec.</a
+      ><a name="6454"
+      >
+
+  </a
+      ><a name="6458" href="Induction.Nat.html#6458" class="Function"
+      >half&#8321;-+&#8322;</a
+      ><a name="6466"
+      > </a
+      ><a name="6467" class="Symbol"
+      >:</a
+      ><a name="6468"
+      > </a
+      ><a name="6469" class="Symbol"
+      >&#8704;</a
+      ><a name="6470"
+      > </a
+      ><a name="6471" href="Induction.Nat.html#6471" class="Bound"
+      >n</a
+      ><a name="6472"
+      > </a
+      ><a name="6473" class="Symbol"
+      >&#8594;</a
+      ><a name="6474"
+      > </a
+      ><a name="6475" href="Induction.Nat.html#3023" class="Function"
+      >half&#8321;</a
+      ><a name="6480"
+      > </a
+      ><a name="6481" class="Symbol"
+      >(</a
+      ><a name="6482" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="6487"
+      > </a
+      ><a name="6488" href="Induction.Nat.html#6471" class="Bound"
+      >n</a
+      ><a name="6489" class="Symbol"
+      >)</a
+      ><a name="6490"
+      > </a
+      ><a name="6491" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="6492"
+      > </a
+      ><a name="6493" href="Induction.Nat.html#6471" class="Bound"
+      >n</a
+      ><a name="6494"
+      >
+  </a
+      ><a name="6497" href="Induction.Nat.html#6458" class="Function"
+      >half&#8321;-+&#8322;</a
+      ><a name="6505"
+      > </a
+      ><a name="6506" class="Symbol"
+      >=</a
+      ><a name="6507"
+      > </a
+      ><a name="6508" href="Induction.WellFounded.html#1751" class="Function"
+      >&lt;-rec</a
+      ><a name="6513"
+      > </a
+      ><a name="6514" class="Symbol"
+      >_</a
+      ><a name="6515"
+      > </a
+      ><a name="6516" class="Symbol"
+      >&#955;</a
+      ><a name="6517"
+      >
+    </a
+      ><a name="6522" class="Symbol"
+      >{</a
+      ><a name="6523"
+      > </a
+      ><a name="6524" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6528"
+      >          </a
+      ><a name="6538" class="Symbol"
+      >_</a
+      ><a name="6539"
+      >   </a
+      ><a name="6542" class="Symbol"
+      >&#8594;</a
+      ><a name="6543"
+      > </a
+      ><a name="6544" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6548"
+      >
+    </a
+      ><a name="6553" class="Symbol"
+      >;</a
+      ><a name="6554"
+      > </a
+      ><a name="6555" class="Symbol"
+      >(</a
+      ><a name="6556" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6559"
+      > </a
+      ><a name="6560" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6564" class="Symbol"
+      >)</a
+      ><a name="6565"
+      >    </a
+      ><a name="6569" class="Symbol"
+      >_</a
+      ><a name="6570"
+      >   </a
+      ><a name="6573" class="Symbol"
+      >&#8594;</a
+      ><a name="6574"
+      > </a
+      ><a name="6575" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6579"
+      >
+    </a
+      ><a name="6584" class="Symbol"
+      >;</a
+      ><a name="6585"
+      > </a
+      ><a name="6586" class="Symbol"
+      >(</a
+      ><a name="6587" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6590"
+      > </a
+      ><a name="6591" class="Symbol"
+      >(</a
+      ><a name="6592" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6595"
+      > </a
+      ><a name="6596" href="Induction.Nat.html#6596" class="Bound"
+      >n</a
+      ><a name="6597" class="Symbol"
+      >))</a
+      ><a name="6599"
+      > </a
+      ><a name="6600" href="Induction.Nat.html#6600" class="Bound"
+      >rec</a
+      ><a name="6603"
+      > </a
+      ><a name="6604" class="Symbol"
+      >&#8594;</a
+      ><a name="6605"
+      >
+        </a
+      ><a name="6614" href="Relation.Binary.PropositionalEquality.html#1034" class="Function"
+      >cong</a
+      ><a name="6618"
+      > </a
+      ><a name="6619" class="Symbol"
+      >(</a
+      ><a name="6620" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6623"
+      > </a
+      ><a name="6624" href="Function.html#713" class="Function Operator"
+      >&#8728;</a
+      ><a name="6625"
+      > </a
+      ><a name="6626" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6629" class="Symbol"
+      >)</a
+      ><a name="6630"
+      > </a
+      ><a name="6631" class="Symbol"
+      >(</a
+      ><a name="6632" href="Induction.Nat.html#6600" class="Bound"
+      >rec</a
+      ><a name="6635"
+      > </a
+      ><a name="6636" href="Induction.Nat.html#6596" class="Bound"
+      >n</a
+      ><a name="6637"
+      > </a
+      ><a name="6638" class="Symbol"
+      >(</a
+      ><a name="6639" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="6646"
+      > </a
+      ><a name="6647" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="6654" class="Symbol"
+      >))</a
+      ><a name="6656"
+      >
+    </a
+      ><a name="6661" class="Symbol"
+      >}</a
+      ><a name="6662"
+      >
+
+  </a
+      ><a name="6666" href="Induction.Nat.html#6666" class="Function"
+      >half&#8322;-+&#8322;</a
+      ><a name="6674"
+      > </a
+      ><a name="6675" class="Symbol"
+      >:</a
+      ><a name="6676"
+      > </a
+      ><a name="6677" class="Symbol"
+      >&#8704;</a
+      ><a name="6678"
+      > </a
+      ><a name="6679" href="Induction.Nat.html#6679" class="Bound"
+      >n</a
+      ><a name="6680"
+      > </a
+      ><a name="6681" class="Symbol"
+      >&#8594;</a
+      ><a name="6682"
+      > </a
+      ><a name="6683" href="Induction.Nat.html#3280" class="Function"
+      >half&#8322;</a
+      ><a name="6688"
+      > </a
+      ><a name="6689" class="Symbol"
+      >(</a
+      ><a name="6690" href="Induction.Nat.html#2491" class="Function"
+      >twice</a
+      ><a name="6695"
+      > </a
+      ><a name="6696" href="Induction.Nat.html#6679" class="Bound"
+      >n</a
+      ><a name="6697" class="Symbol"
+      >)</a
+      ><a name="6698"
+      > </a
+      ><a name="6699" href="Relation.Binary.Core.html#4603" class="Datatype Operator"
+      >&#8801;</a
+      ><a name="6700"
+      > </a
+      ><a name="6701" href="Induction.Nat.html#6679" class="Bound"
+      >n</a
+      ><a name="6702"
+      >
+  </a
+      ><a name="6705" href="Induction.Nat.html#6666" class="Function"
+      >half&#8322;-+&#8322;</a
+      ><a name="6713"
+      > </a
+      ><a name="6714" class="Symbol"
+      >=</a
+      ><a name="6715"
+      > </a
+      ><a name="6716" href="Induction.WellFounded.html#1751" class="Function"
+      >&lt;-rec</a
+      ><a name="6721"
+      > </a
+      ><a name="6722" class="Symbol"
+      >_</a
+      ><a name="6723"
+      > </a
+      ><a name="6724" class="Symbol"
+      >&#955;</a
+      ><a name="6725"
+      >
+    </a
+      ><a name="6730" class="Symbol"
+      >{</a
+      ><a name="6731"
+      > </a
+      ><a name="6732" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6736"
+      >          </a
+      ><a name="6746" class="Symbol"
+      >_</a
+      ><a name="6747"
+      >   </a
+      ><a name="6750" class="Symbol"
+      >&#8594;</a
+      ><a name="6751"
+      > </a
+      ><a name="6752" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6756"
+      >
+    </a
+      ><a name="6761" class="Symbol"
+      >;</a
+      ><a name="6762"
+      > </a
+      ><a name="6763" class="Symbol"
+      >(</a
+      ><a name="6764" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6767"
+      > </a
+      ><a name="6768" href="Data.Nat.html#714" class="InductiveConstructor"
+      >zero</a
+      ><a name="6772" class="Symbol"
+      >)</a
+      ><a name="6773"
+      >    </a
+      ><a name="6777" class="Symbol"
+      >_</a
+      ><a name="6778"
+      >   </a
+      ><a name="6781" class="Symbol"
+      >&#8594;</a
+      ><a name="6782"
+      > </a
+      ><a name="6783" href="Relation.Binary.Core.html#4653" class="InductiveConstructor"
+      >refl</a
+      ><a name="6787"
+      >
+    </a
+      ><a name="6792" class="Symbol"
+      >;</a
+      ><a name="6793"
+      > </a
+      ><a name="6794" class="Symbol"
+      >(</a
+      ><a name="6795" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6798"
+      > </a
+      ><a name="6799" class="Symbol"
+      >(</a
+      ><a name="6800" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6803"
+      > </a
+      ><a name="6804" href="Induction.Nat.html#6804" class="Bound"
+      >n</a
+      ><a name="6805" class="Symbol"
+      >))</a
+      ><a name="6807"
+      > </a
+      ><a name="6808" href="Induction.Nat.html#6808" class="Bound"
+      >rec</a
+      ><a name="6811"
+      > </a
+      ><a name="6812" class="Symbol"
+      >&#8594;</a
+      ><a name="6813"
+      >
+        </a
+      ><a name="6822" href="Relation.Binary.PropositionalEquality.html#1034" class="Function"
+      >cong</a
+      ><a name="6826"
+      > </a
+      ><a name="6827" class="Symbol"
+      >(</a
+      ><a name="6828" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6831"
+      > </a
+      ><a name="6832" href="Function.html#713" class="Function Operator"
+      >&#8728;</a
+      ><a name="6833"
+      > </a
+      ><a name="6834" href="Data.Nat.html#725" class="InductiveConstructor"
+      >suc</a
+      ><a name="6837" class="Symbol"
+      >)</a
+      ><a name="6838"
+      > </a
+      ><a name="6839" class="Symbol"
+      >(</a
+      ><a name="6840" href="Induction.Nat.html#6808" class="Bound"
+      >rec</a
+      ><a name="6843"
+      > </a
+      ><a name="6844" href="Induction.Nat.html#6804" class="Bound"
+      >n</a
+      ><a name="6845"
+      > </a
+      ><a name="6846" class="Symbol"
+      >(</a
+      ><a name="6847" href="Data.Nat.html#1439" class="InductiveConstructor"
+      >&#8804;&#8242;-step</a
+      ><a name="6854"
+      > </a
+      ><a name="6855" href="Data.Nat.html#1396" class="InductiveConstructor"
+      >&#8804;&#8242;-refl</a
+      ><a name="6862" class="Symbol"
+      >))</a
+      ><a name="6864"
+      >
+    </a
+      ><a name="6869" class="Symbol"
+      >}</a
+      ><a name="6870"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
