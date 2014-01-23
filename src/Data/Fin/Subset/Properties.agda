@@ -4,10 +4,10 @@
 -- Some properties about subsets
 ------------------------------------------------------------------------
 
-module Data.Fin.Subset.Props where
+module Data.Fin.Subset.Properties where
 
 open import Algebra
-import Algebra.Props.BooleanAlgebra as BoolProp
+import Algebra.Properties.BooleanAlgebra as BoolProp
 open import Data.Empty using (⊥-elim)
 open import Data.Fin using (Fin); open Data.Fin.Fin
 open import Data.Fin.Subset
