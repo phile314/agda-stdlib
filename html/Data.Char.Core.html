@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+><head
+  ><title
+    >Data.Char.Core</title
+    ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"
+     /><meta http-equiv="Content-Style-Type" content="text/css"
+     /><link href="Agda.css" rel="stylesheet" type="text/css"
+     /></head
+  ><body
+  ><pre
+    ><a name="1" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="73"
+      >
+</a
+      ><a name="74" class="Comment"
+      >-- The Agda standard library</a
+      ><a name="102"
+      >
+</a
+      ><a name="103" class="Comment"
+      >--</a
+      ><a name="105"
+      >
+</a
+      ><a name="106" class="Comment"
+      >-- Core definitions for Characters</a
+      ><a name="140"
+      >
+</a
+      ><a name="141" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="213"
+      >
+
+</a
+      ><a name="215" class="Keyword"
+      >module</a
+      ><a name="221"
+      > </a
+      ><a name="222" href="Data.Char.Core.html#1" class="Module"
+      >Data.Char.Core</a
+      ><a name="236"
+      > </a
+      ><a name="237" class="Keyword"
+      >where</a
+      ><a name="242"
+      >
+
+</a
+      ><a name="244" class="Keyword"
+      >open</a
+      ><a name="248"
+      > </a
+      ><a name="249" class="Keyword"
+      >import</a
+      ><a name="255"
+      > </a
+      ><a name="256" href="Data.Nat.html#1" class="Module"
+      >Data.Nat</a
+      ><a name="264"
+      > </a
+      ><a name="265" class="Keyword"
+      >using</a
+      ><a name="270"
+      > </a
+      ><a name="271" class="Symbol"
+      >(</a
+      ><a name="272"
+      >&#8469;</a
+      ><a name="273" class="Symbol"
+      >)</a
+      ><a name="274"
+      >
+</a
+      ><a name="275" class="Keyword"
+      >open</a
+      ><a name="279"
+      > </a
+      ><a name="280" class="Keyword"
+      >import</a
+      ><a name="286"
+      > </a
+      ><a name="287" href="Data.Bool.html#1" class="Module"
+      >Data.Bool</a
+      ><a name="296"
+      > </a
+      ><a name="297" class="Keyword"
+      >using</a
+      ><a name="302"
+      > </a
+      ><a name="303" class="Symbol"
+      >(</a
+      ><a name="304"
+      >Bool</a
+      ><a name="308" class="Symbol"
+      >;</a
+      ><a name="309"
+      > true</a
+      ><a name="314" class="Symbol"
+      >;</a
+      ><a name="315"
+      > false</a
+      ><a name="321" class="Symbol"
+      >)</a
+      ><a name="322"
+      >
+
+</a
+      ><a name="324" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="396"
+      >
+</a
+      ><a name="397" class="Comment"
+      >-- The type</a
+      ><a name="408"
+      >
+
+</a
+      ><a name="410" class="Keyword"
+      >postulate</a
+      ><a name="419"
+      >
+  </a
+      ><a name="422" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="426"
+      > </a
+      ><a name="427" class="Symbol"
+      >:</a
+      ><a name="428"
+      > </a
+      ><a name="429" class="PrimitiveType"
+      >Set</a
+      ><a name="432"
+      >
+
+</a
+      ><a name="434" class="Symbol"
+      >{-#</a
+      ><a name="437"
+      > </a
+      ><a name="438" class="Keyword"
+      >BUILTIN</a
+      ><a name="445"
+      > CHAR </a
+      ><a name="451" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="455"
+      > </a
+      ><a name="456" class="Symbol"
+      >#-}</a
+      ><a name="459"
+      >
+</a
+      ><a name="460" class="Symbol"
+      >{-#</a
+      ><a name="463"
+      > </a
+      ><a name="464" class="Keyword"
+      >COMPILED_TYPE</a
+      ><a name="477"
+      > </a
+      ><a name="478" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="482"
+      > Char </a
+      ><a name="488" class="Symbol"
+      >#-}</a
+      ><a name="491"
+      >
+
+</a
+      ><a name="493" class="Comment"
+      >------------------------------------------------------------------------</a
+      ><a name="565"
+      >
+</a
+      ><a name="566" class="Comment"
+      >-- Primitive operations</a
+      ><a name="589"
+      >
+
+</a
+      ><a name="591" class="Keyword"
+      >primitive</a
+      ><a name="600"
+      >
+  </a
+      ><a name="603" href="Data.Char.Core.html#603" class="Primitive"
+      >primCharToNat</a
+      ><a name="616"
+      >    </a
+      ><a name="620" class="Symbol"
+      >:</a
+      ><a name="621"
+      > </a
+      ><a name="622" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="626"
+      > </a
+      ><a name="627" class="Symbol"
+      >&#8594;</a
+      ><a name="628"
+      > </a
+      ><a name="629" href="Data.Nat.html#663" class="Datatype"
+      >&#8469;</a
+      ><a name="630"
+      >
+  </a
+      ><a name="633" href="Data.Char.Core.html#633" class="Primitive"
+      >primCharEquality</a
+      ><a name="649"
+      > </a
+      ><a name="650" class="Symbol"
+      >:</a
+      ><a name="651"
+      > </a
+      ><a name="652" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="656"
+      > </a
+      ><a name="657" class="Symbol"
+      >&#8594;</a
+      ><a name="658"
+      > </a
+      ><a name="659" href="Data.Char.Core.html#422" class="Postulate"
+      >Char</a
+      ><a name="663"
+      > </a
+      ><a name="664" class="Symbol"
+      >&#8594;</a
+      ><a name="665"
+      > </a
+      ><a name="666" href="Data.Bool.html#603" class="Datatype"
+      >Bool</a
+      ><a name="670"
+      >
+</a
+      ><a name="671" class="Comment"
+      >-- primShowChar is in Data.String.Core for break an import cycle.</a
+      ><a name="736"
+      >
+</a
+      ></pre
+    ></body
+  ></html
+>
