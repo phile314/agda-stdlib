@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 dist
 Everything.agda
+=======
+# Keep this file in alphabetic order please!
+
+.*.swp
+>>>>>>> master
 *.agdai
 *.agda.el
 *.lagda.el
-.*.swp
+*.hi
+*.o
+dist
+Everything.agda
+html
