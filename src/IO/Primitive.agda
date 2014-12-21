@@ -28,6 +28,8 @@ postulate
 
 {-# COMPILED return (\_ _ -> return)    #-}
 {-# COMPILED _>>=_  (\_ _ _ _ -> (>>=)) #-}
+{-# COMPILED_CORE return (\_ _ x -> UHC.Agda.Builtins.primReturn x) #-}
+{-# COMPILED_CORE _>>=_ (\_ _ _ _ x y -> UHC.Agda.Builtins.primBind x y) #-}
 
 ------------------------------------------------------------------------
 -- Simple lazy IO
@@ -61,3 +63,10 @@ postulate
 {-# COMPILED putStr         putStr                #-}
 {-# COMPILED putStrLn       putStrLn              #-}
 {-# COMPILED readFiniteFile IO.FFI.readFiniteFile #-}
+{-# COMPILED_CORE getContents    (UHC.Agda.Builtins.primGetContents) #-}
+{-# COMPILED_CORE readFile       (UHC.Agda.Builtins.primReadFile) #-}
+{-# COMPILED_CORE writeFile      (UHC.Agda.Builtins.primWriteFile) #-}
+{-# COMPILED_CORE appendFile     (UHC.Agda.Builtins.primAppendFile) #-}
+{-# COMPILED_CORE putStr         (UHC.Agda.Builtins.primPutStr) #-}
+{-# COMPILED_CORE putStrLn       (UHC.Agda.Builtins.primPutStrLn) #-}
+-- TODO readFiniteFile is missing for the UHC backend
