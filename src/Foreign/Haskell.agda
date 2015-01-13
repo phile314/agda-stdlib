@@ -12,3 +12,4 @@ data Unit : Set where
   unit : Unit
 
 {-# COMPILED_DATA Unit () () #-}
+{-# COMPILED_CORE_DATA Unit __UNIT__ __UNIT__ #-}
