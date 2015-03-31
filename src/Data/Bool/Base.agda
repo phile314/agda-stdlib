@@ -29,7 +29,7 @@ data Bool : Set where
 {-# COMPILED_JS true  true  #-}
 {-# COMPILED_JS false false #-}
 
-{-# COMPILED_CORE_DATA Bool __BOOL__ __TRUE__ __FALSE__ #-}
+{-# COMPILED_DATA_UHC Bool __BOOL__ __TRUE__ __FALSE__ #-}
 
 ------------------------------------------------------------------------
 -- Some operations
