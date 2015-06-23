@@ -151,6 +151,7 @@ mutual
     con     : (c : Name) (args : List (Arg Term)) → Term
     -- Identifier applied to arguments.
     def     : (f : Name) (args : List (Arg Term)) → Term
+    app     : (f : Term) → (args : List (Arg Term)) → Term
     -- Different kinds of λ-abstraction.
     lam     : (v : Visibility) (t : Abs Term) → Term
     -- Pattern matching λ-abstraction.
@@ -192,6 +193,7 @@ mutual
 {-# BUILTIN AGDATERMVAR         var     #-}
 {-# BUILTIN AGDATERMCON         con     #-}
 {-# BUILTIN AGDATERMDEF         def     #-}
+{-# BUILTIN AGDATERMAPP         app     #-}
 {-# BUILTIN AGDATERMLAM         lam     #-}
 {-# BUILTIN AGDATERMEXTLAM      pat-lam #-}
 {-# BUILTIN AGDATERMPI          pi      #-}
@@ -333,6 +335,12 @@ private
 
   def₂ : ∀ {f f′ args args′} → def f args ≡ def f′ args′ → args ≡ args′
   def₂ refl = refl
+
+  app₁ : ∀ {f f′ args args′} → app f args ≡ app f′ args′ → f ≡ f′
+  app₁ refl = refl
+  
+  app₂ :  ∀ {f f′ args args′} → app f args ≡ app f′ args′ → args ≡ args′
+  app₂ refl = refl
 
   lam₁ : ∀ {v v′ t t′} → lam v t ≡ lam v′ t′ → v ≡ v′
   lam₁ refl = refl
@@ -573,6 +581,7 @@ mutual
   var x args ≟ var x′ args′ = Dec.map′ (cong₂′ var) < var₁ , var₂ > (x ≟-ℕ x′          ×-dec args ≟-Args args′)
   con c args ≟ con c′ args′ = Dec.map′ (cong₂′ con) < con₁ , con₂ > (c ≟-Name c′       ×-dec args ≟-Args args′)
   def f args ≟ def f′ args′ = Dec.map′ (cong₂′ def) < def₁ , def₂ > (f ≟-Name f′       ×-dec args ≟-Args args′)
+  app f args ≟ app f′ args′ = Dec.map′ (cong₂′ app) < app₁ , app₂ > (f ≟ f′            ×-dec args ≟-Args args′)
   lam v t    ≟ lam v′ t′    = Dec.map′ (cong₂′ lam) < lam₁ , lam₂ > (v ≟-Visibility v′ ×-dec t ≟-AbsTerm t′)
   pat-lam cs args ≟ pat-lam cs′ args′ =
                               Dec.map′ (cong₂′ pat-lam) < pat-lam₁ , pat-lam₂ > (cs ≟-Clauses cs′ ×-dec args ≟-Args args′)
@@ -587,6 +596,7 @@ mutual
 
   var x args ≟ con c args′ = no λ()
   var x args ≟ def f args′ = no λ()
+  var x args ≟ app f args′ = no λ()
   var x args ≟ lam v t     = no λ()
   var x args ≟ pi t₁ t₂    = no λ()
   var x args ≟ sort _      = no λ()
@@ -594,21 +604,32 @@ mutual
   var x args ≟ unknown     = no λ()
   con c args ≟ var x args′ = no λ()
   con c args ≟ def f args′ = no λ()
+  con c args ≟ app f args′ = no λ()
   con c args ≟ lam v t     = no λ()
   con c args ≟ pi t₁ t₂    = no λ()
   con c args ≟ sort _      = no λ()
   con c args ≟ lit _      = no λ()
   con c args ≟ unknown     = no λ()
   def f args ≟ var x args′ = no λ()
+  def f args ≟ app f′ args′ = no λ()
   def f args ≟ con c args′ = no λ()
   def f args ≟ lam v t     = no λ()
   def f args ≟ pi t₁ t₂    = no λ()
   def f args ≟ sort _      = no λ()
   def f args ≟ lit _      = no λ()
   def f args ≟ unknown     = no λ()
+  app f args ≟ var x args₁ = no λ()
+  app f args ≟ con c args₁ = no λ()
+  app f args ≟ def f₁ args₁ = no λ()
+  app f args ≟ lam v t = no λ()
+  app f args ≟ pi t₁ t₂ = no λ()
+  app f args ≟ sort s = no λ()
+  app f args ≟ lit l = no λ()
+  app f args ≟ unknown = no λ()
   lam v t    ≟ var x args  = no λ()
   lam v t    ≟ con c args  = no λ()
   lam v t    ≟ def f args  = no λ()
+  lam v t    ≟ app f args  = no λ()
   lam v t    ≟ pi t₁ t₂    = no λ()
   lam v t    ≟ sort _      = no λ()
   lam v t    ≟ lit _      = no λ()
@@ -616,13 +637,15 @@ mutual
   pi t₁ t₂   ≟ var x args  = no λ()
   pi t₁ t₂   ≟ con c args  = no λ()
   pi t₁ t₂   ≟ def f args  = no λ()
+  pi t₁ t₂   ≟ app f args  = no λ()
   pi t₁ t₂   ≟ lam v t     = no λ()
   pi t₁ t₂   ≟ sort _      = no λ()
-  pi t₁ t₂   ≟ lit _      = no λ()
+  pi t₁ t₂   ≟ lit _       = no λ()
   pi t₁ t₂   ≟ unknown     = no λ()
   sort _     ≟ var x args  = no λ()
   sort _     ≟ con c args  = no λ()
   sort _     ≟ def f args  = no λ()
+  sort _     ≟ app f args  = no λ()
   sort _     ≟ lam v t     = no λ()
   sort _     ≟ pi t₁ t₂    = no λ()
   sort _     ≟ lit _       = no λ()
@@ -630,6 +653,7 @@ mutual
   lit _     ≟ var x args  = no λ()
   lit _     ≟ con c args  = no λ()
   lit _     ≟ def f args  = no λ()
+  lit _     ≟ app f args  = no λ()
   lit _     ≟ lam v t     = no λ()
   lit _     ≟ pi t₁ t₂    = no λ()
   lit _     ≟ sort _      = no λ()
@@ -637,6 +661,7 @@ mutual
   unknown    ≟ var x args  = no λ()
   unknown    ≟ con c args  = no λ()
   unknown    ≟ def f args  = no λ()
+  unknown    ≟ app f args  = no λ()
   unknown    ≟ lam v t     = no λ()
   unknown    ≟ pi t₁ t₂    = no λ()
   unknown    ≟ sort _      = no λ()
@@ -644,6 +669,7 @@ mutual
   pat-lam _ _ ≟ var x args  = no λ()
   pat-lam _ _ ≟ con c args  = no λ()
   pat-lam _ _ ≟ def f args  = no λ()
+  pat-lam _ _ ≟ app f args  = no λ()
   pat-lam _ _ ≟ lam v t     = no λ()
   pat-lam _ _ ≟ pi t₁ t₂    = no λ()
   pat-lam _ _ ≟ sort _      = no λ()
@@ -652,6 +678,7 @@ mutual
   var x args  ≟ pat-lam _ _ = no λ()
   con c args  ≟ pat-lam _ _ = no λ()
   def f args  ≟ pat-lam _ _ = no λ()
+  app f args  ≟ pat-lam _ _ = no λ()
   lam v t     ≟ pat-lam _ _ = no λ()
   pi t₁ t₂    ≟ pat-lam _ _ = no λ()
   sort _      ≟ pat-lam _ _ = no λ()
@@ -670,6 +697,10 @@ mutual
   def _ _        ≟ quote-term _   = no λ()
   def _ _        ≟ quote-context  = no λ()
   def _ _        ≟ unquote-term _ _ = no λ()
+  app _ _        ≟ quote-goal _   = no λ()
+  app _ _        ≟ quote-term _   = no λ()
+  app _ _        ≟ quote-context  = no λ()
+  app _ _        ≟ unquote-term _ _ = no λ()
   lam _ _        ≟ quote-goal _   = no λ()
   lam _ _        ≟ quote-term _   = no λ()
   lam _ _        ≟ quote-context  = no λ()
@@ -693,6 +724,7 @@ mutual
   quote-goal _   ≟ var _ _        = no λ()
   quote-goal _   ≟ con _ _        = no λ()
   quote-goal _   ≟ def _ _        = no λ()
+  quote-goal _   ≟ app _ _        = no λ()
   quote-goal _   ≟ lam _ _        = no λ()
   quote-goal _   ≟ pat-lam _ _    = no λ()
   quote-goal _   ≟ pi _ _         = no λ()
@@ -705,6 +737,7 @@ mutual
   quote-term _   ≟ var _ _        = no λ()
   quote-term _   ≟ con _ _        = no λ()
   quote-term _   ≟ def _ _        = no λ()
+  quote-term _   ≟ app _ _        = no λ()
   quote-term _   ≟ lam _ _        = no λ()
   quote-term _   ≟ pat-lam _ _    = no λ()
   quote-term _   ≟ pi _ _         = no λ()
@@ -717,6 +750,7 @@ mutual
   quote-context  ≟ var _ _        = no λ()
   quote-context  ≟ con _ _        = no λ()
   quote-context  ≟ def _ _        = no λ()
+  quote-context  ≟ app _ _        = no λ()
   quote-context  ≟ lam _ _        = no λ()
   quote-context  ≟ pat-lam _ _    = no λ()
   quote-context  ≟ pi _ _         = no λ()
@@ -729,6 +763,7 @@ mutual
   unquote-term _ _ ≟ var _ _        = no λ()
   unquote-term _ _ ≟ con _ _        = no λ()
   unquote-term _ _ ≟ def _ _        = no λ()
+  unquote-term _ _ ≟ app _ _        = no λ()
   unquote-term _ _ ≟ lam _ _        = no λ()
   unquote-term _ _ ≟ pat-lam _ _    = no λ()
   unquote-term _ _ ≟ pi _ _         = no λ()

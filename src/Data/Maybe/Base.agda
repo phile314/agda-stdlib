@@ -14,6 +14,9 @@ data Maybe {a} (A : Set a) : Set a where
   just    : (x : A) → Maybe A
   nothing : Maybe A
 
+{-# BUILTIN MAYBE Maybe #-}
+{-# BUILTIN MAYBEJUST just #-}
+{-# BUILTIN MAYBENOTHING nothing #-}
 {-# IMPORT Data.FFI #-}
 {-# COMPILED_DATA Maybe Data.FFI.AgdaMaybe Just Nothing #-}
 
