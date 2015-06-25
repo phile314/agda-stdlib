@@ -791,3 +791,74 @@ mutual
   lit _   ≟-Sort unknown = no λ()
   unknown ≟-Sort set _   = no λ()
   unknown ≟-Sort lit _   = no λ()
+
+
+
+------------------------------------------------------------------------
+-- Pretty Printing
+
+open import Data.Stream
+open import Data.String as S
+
+private
+  Γ : Set
+  Γ = List String
+
+  -- name supply
+  NMS : Set
+  NMS = Stream String
+
+  parens : String → String
+  parens s = "(" S.++ s S.++ ")"
+
+  postulate notImpl OutOfBounds : ∀ {a} {A : Set a} → A
+
+  lookup' : ∀ {a} {A : Set a} → ℕ → List A → A
+  lookup' i [] = OutOfBounds
+  lookup' Data.Nat.zero (x ∷ xs) = x
+  lookup' (Data.Nat.suc i) (x ∷ xs) = lookup' i xs
+
+  strArg : Visibility → String → String
+  strArg visible s = "(" S.++ s S.++ ")"
+  strArg hidden s = "{" S.++ s S.++ "}"
+  strArg instance′ s = "{{" S.++ s S.++ "}}"
+
+  applyArgs : NMS → Γ → List (Arg Term) → String → (NMS × String)
+
+  pretty' : NMS → Γ → Term → (NMS × String)
+  pretty' nms γ (var x args) = applyArgs nms γ args (lookup' x γ)
+  pretty' nms γ (con c args) = applyArgs nms γ args (showName c)
+  pretty' nms γ (def f args) = applyArgs nms γ args (showName f)
+  pretty' nms γ (app t args) = applyArgs (proj₁ t') γ args (proj₂ t')
+    where t' = pretty' nms γ t
+  pretty' nms γ (lam v (abs s t)) = proj₁ t' , parens ("λ" S.++ strArg v (head nms) S.++ proj₂ t')
+    where
+      t' = pretty' (tail nms) (head nms ∷ γ) t
+  pretty' nms γ (pat-lam cs args) = notImpl
+  pretty' nms γ (pi (arg (arg-info v r) (el s₁ t₁)) (abs str (el s₂ t₂))) =
+    proj₁ t₂' , (strArg v (vNm S.++ " : " S.++ (parens $ proj₂ t₁'))) S.++ " → " S.++ (parens $ proj₂ t₂')
+    where
+      vNm = head nms S.++ str
+      t₁' = pretty' (tail nms) γ t₁
+      t₂' = pretty' (proj₁ t₁') (vNm ∷ γ) t₂
+  pretty' nms γ (sort (set t)) = proj₁ t' , "Set " S.++ proj₂ t'
+    where t' = pretty' nms γ t
+  pretty' nms γ (sort (lit n)) = nms , "Set " S.++ showNat n
+  pretty' nms γ (sort unknown) = nms , "UNKOWNSORT"
+  pretty' nms γ (lit (char x)) = nms , "'" S.++ showLiteral (char x) S.++ "'"
+  pretty' nms γ (lit (string x)) = nms , "\"" S.++ x S.++ "\""
+  pretty' nms γ (lit l) = nms , showLiteral l
+  pretty' nms γ (quote-goal t) = notImpl
+  pretty' nms γ (quote-term t) = notImpl
+  pretty' nms γ quote-context = notImpl
+  pretty' nms γ (unquote-term t args) = notImpl
+  pretty' nms γ unknown = nms , "UNKNOWN"
+
+  applyArgs nms γ [] cont = nms , cont
+  applyArgs nms γ (arg (arg-info v r) x ∷ args) cont = applyArgs (proj₁ t') γ args (cont S.++ " " S.++ (strArg v $ proj₂ t'))
+    where t' = pretty' nms γ x
+
+-- pretty prints a closed term
+pretty : Term → String
+pretty = proj₂ ∘ (pretty' names [])
+  where names = Data.Stream.map (λ x → "x" S.++ showNat x) (iterate Data.Nat.suc 0)
