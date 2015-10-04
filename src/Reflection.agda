@@ -166,6 +166,7 @@ mutual
     quote-term : (t : Term) → Term
     quote-context : Term
     unquote-term : (t : Term) (args : List (Arg Term)) → Term
+    foreign-term : Term → Type → Term
     -- Anything else.
     unknown : Term
 
@@ -201,6 +202,7 @@ mutual
 {-# BUILTIN AGDATERMQUOTEGOAL    quote-goal    #-}
 {-# BUILTIN AGDATERMQUOTECONTEXT quote-context #-}
 {-# BUILTIN AGDATERMUNQUOTE      unquote-term  #-}
+{-# BUILTIN AGDATERMFOREIGN      foreign-term #-}
 {-# BUILTIN AGDATERMUNSUPPORTED unknown #-}
 {-# BUILTIN AGDATYPEEL          el      #-}
 {-# BUILTIN AGDASORTSET         set     #-}
@@ -369,6 +371,12 @@ private
 
   unquote-term₂ : ∀ {x y args args′} → unquote-term x args ≡ unquote-term y args′ → args ≡ args′
   unquote-term₂ refl = refl
+
+  foreign-term₁ : ∀ {x y args args′} → foreign-term x args ≡ foreign-term y args′ → x ≡ y
+  foreign-term₁ refl = refl
+
+  foreign-term₂ : ∀ {x y args args′} → foreign-term x args ≡ foreign-term y args′ → args ≡ args′
+  foreign-term₂ refl = refl
 
   pcon₁ : ∀ {c c′ args args′} → Pattern.con c args ≡ con c′ args′ → c ≡ c′
   pcon₁ refl = refl
@@ -583,6 +591,7 @@ mutual
   quote-term t   ≟ quote-term t′   = Dec.map′ (cong quote-term) quote-term₁ (t ≟ t′)
   unquote-term t args ≟ unquote-term t′ args′ = Dec.map′ (cong₂′ unquote-term) < unquote-term₁ , unquote-term₂ > (t ≟ t′ ×-dec args ≟-Args args′)
   quote-context  ≟ quote-context = yes refl
+  foreign-term t₁ t₂ ≟ foreign-term t₁′ t₂′ = Dec.map′ (cong₂′ foreign-term) < foreign-term₁ , foreign-term₂ > (t₁ ≟ t₁′ ×-dec t₂ ≟-Type t₂′)
   unknown    ≟ unknown      = yes refl
 
   var x args ≟ con c args′ = no λ()
@@ -591,6 +600,7 @@ mutual
   var x args ≟ pi t₁ t₂    = no λ()
   var x args ≟ sort _      = no λ()
   var x args ≟ lit _      = no λ()
+  var x args ≟ foreign-term _ _ = no λ()
   var x args ≟ unknown     = no λ()
   con c args ≟ var x args′ = no λ()
   con c args ≟ def f args′ = no λ()
@@ -598,6 +608,7 @@ mutual
   con c args ≟ pi t₁ t₂    = no λ()
   con c args ≟ sort _      = no λ()
   con c args ≟ lit _      = no λ()
+  con c args ≟ foreign-term _ _ = no λ()
   con c args ≟ unknown     = no λ()
   def f args ≟ var x args′ = no λ()
   def f args ≟ con c args′ = no λ()
@@ -605,6 +616,7 @@ mutual
   def f args ≟ pi t₁ t₂    = no λ()
   def f args ≟ sort _      = no λ()
   def f args ≟ lit _      = no λ()
+  def f args ≟ foreign-term _ _ = no λ()
   def f args ≟ unknown     = no λ()
   lam v t    ≟ var x args  = no λ()
   lam v t    ≟ con c args  = no λ()
@@ -612,6 +624,7 @@ mutual
   lam v t    ≟ pi t₁ t₂    = no λ()
   lam v t    ≟ sort _      = no λ()
   lam v t    ≟ lit _      = no λ()
+  lam v t    ≟ foreign-term _ _ = no λ()
   lam v t    ≟ unknown     = no λ()
   pi t₁ t₂   ≟ var x args  = no λ()
   pi t₁ t₂   ≟ con c args  = no λ()
@@ -619,6 +632,7 @@ mutual
   pi t₁ t₂   ≟ lam v t     = no λ()
   pi t₁ t₂   ≟ sort _      = no λ()
   pi t₁ t₂   ≟ lit _       = no λ()
+  pi t₁ t₂   ≟ foreign-term _ _ = no λ()
   pi t₁ t₂   ≟ unknown     = no λ()
   sort _     ≟ var x args  = no λ()
   sort _     ≟ con c args  = no λ()
@@ -626,6 +640,7 @@ mutual
   sort _     ≟ lam v t     = no λ()
   sort _     ≟ pi t₁ t₂    = no λ()
   sort _     ≟ lit _       = no λ()
+  sort _     ≟ foreign-term _ _ = no λ()
   sort _     ≟ unknown     = no λ()
   lit _     ≟ var x args  = no λ()
   lit _     ≟ con c args  = no λ()
@@ -633,6 +648,7 @@ mutual
   lit _     ≟ lam v t     = no λ()
   lit _     ≟ pi t₁ t₂    = no λ()
   lit _     ≟ sort _      = no λ()
+  lit _     ≟ foreign-term _ _ = no λ()
   lit _     ≟ unknown     = no λ()
   unknown    ≟ var x args  = no λ()
   unknown    ≟ con c args  = no λ()
@@ -640,6 +656,7 @@ mutual
   unknown    ≟ lam v t     = no λ()
   unknown    ≟ pi t₁ t₂    = no λ()
   unknown    ≟ sort _      = no λ()
+  unknown    ≟ foreign-term _ _ = no λ()
   unknown    ≟ lit _       = no λ()
   pat-lam _ _ ≟ var x args  = no λ()
   pat-lam _ _ ≟ con c args  = no λ()
@@ -648,6 +665,7 @@ mutual
   pat-lam _ _ ≟ pi t₁ t₂    = no λ()
   pat-lam _ _ ≟ sort _      = no λ()
   pat-lam _ _ ≟ lit _       = no λ()
+  pat-lam _ _ ≟ foreign-term _ _ = no λ()
   pat-lam _ _ ≟ unknown     = no λ()
   var x args  ≟ pat-lam _ _ = no λ()
   con c args  ≟ pat-lam _ _ = no λ()
@@ -656,6 +674,7 @@ mutual
   pi t₁ t₂    ≟ pat-lam _ _ = no λ()
   sort _      ≟ pat-lam _ _ = no λ()
   lit _       ≟ pat-lam _ _ = no λ()
+  foreign-term _ _ ≟ pat-lam _ _ = no λ()
   unknown     ≟ pat-lam _ _ = no λ()
 
   var _ _        ≟ quote-goal _   = no λ()
@@ -701,6 +720,7 @@ mutual
   quote-goal _   ≟ quote-term _   = no λ()
   quote-goal _   ≟ quote-context  = no λ()
   quote-goal _   ≟ unquote-term _ _ = no λ()
+  quote-goal _   ≟ foreign-term _ _ = no λ()
   quote-goal _   ≟ unknown        = no λ()
   quote-term _   ≟ var _ _        = no λ()
   quote-term _   ≟ con _ _        = no λ()
@@ -713,6 +733,7 @@ mutual
   quote-term _   ≟ quote-goal _   = no λ()
   quote-term _   ≟ quote-context  = no λ()
   quote-term _   ≟ unquote-term _ _ = no λ()
+  quote-term _   ≟ foreign-term _ _ = no λ()
   quote-term _   ≟ unknown        = no λ()
   quote-context  ≟ var _ _        = no λ()
   quote-context  ≟ con _ _        = no λ()
@@ -725,6 +746,7 @@ mutual
   quote-context  ≟ quote-goal _   = no λ()
   quote-context  ≟ quote-term _   = no λ()
   quote-context  ≟ unquote-term _ _ = no λ()
+  quote-context  ≟ foreign-term _ _ = no λ()
   quote-context  ≟ unknown        = no λ()
   unquote-term _ _ ≟ var _ _        = no λ()
   unquote-term _ _ ≟ con _ _        = no λ()
@@ -737,7 +759,21 @@ mutual
   unquote-term _ _ ≟ quote-goal _   = no λ()
   unquote-term _ _ ≟ quote-term _   = no λ()
   unquote-term _ _ ≟ quote-context  = no λ()
+  unquote-term _ _ ≟ foreign-term _ _ = no λ()
   unquote-term _ _ ≟ unknown        = no λ()
+  foreign-term _ _ ≟ var _ _        = no λ()
+  foreign-term _ _ ≟ con _ _        = no λ()
+  foreign-term _ _ ≟ def _ _        = no λ()
+  foreign-term _ _ ≟ lam _ _        = no λ()
+--  foreign-term _ _ ≟ pat-lam _ _    = no λ()
+  foreign-term _ _ ≟ pi _ _         = no λ()
+  foreign-term _ _ ≟ sort _         = no λ()
+  foreign-term _ _ ≟ lit _          = no λ()
+  foreign-term _ _ ≟ quote-goal _   = no λ()
+  foreign-term _ _ ≟ quote-term _   = no λ()
+  foreign-term _ _ ≟ quote-context  = no λ()
+  foreign-term _ _ ≟ unquote-term _ _ = no λ()
+  foreign-term _ _ ≟ unknown        = no λ()
   unknown        ≟ quote-goal _   = no λ()
   unknown        ≟ quote-term _   = no λ()
   unknown        ≟ quote-context  = no λ()
@@ -812,7 +848,7 @@ private
       t₂' = pretty' (proj₁ t₁') (vNm ∷ γ) t₂
   pretty' nms γ (sort (set t)) = proj₁ t' , "Set " S.++ proj₂ t'
     where t' = pretty' nms γ t
-  pretty' nms γ (sort (lit n)) = nms , "Set " S.++ showNat n
+  pretty' nms γ (sort (lit n)) = nms , "Set" S.++ showNat n
   pretty' nms γ (sort unknown) = nms , "UNKOWNSORT"
   pretty' nms γ (lit (char x)) = nms , "'" S.++ showLiteral (char x) S.++ "'"
   pretty' nms γ (lit (string x)) = nms , "\"" S.++ x S.++ "\""
@@ -821,7 +857,8 @@ private
   pretty' nms γ (quote-term t) = notImpl
   pretty' nms γ quote-context = notImpl
   pretty' nms γ (unquote-term t args) = notImpl
-  pretty' nms γ unknown = nms , "UNKNOWN"
+  pretty' nms γ (foreign-term f ty) = notImpl
+  pretty' nms γ unknown = nms , "_"
 
   applyArgs nms γ [] cont = nms , cont
   applyArgs nms γ (arg (arg-info v r) x ∷ args) cont = applyArgs (proj₁ t') γ args (cont S.++ " " S.++ (strArg v $ proj₂ t'))
