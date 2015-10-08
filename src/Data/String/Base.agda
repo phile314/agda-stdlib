@@ -20,6 +20,7 @@ postulate
 
 {-# BUILTIN STRING String #-}
 {-# COMPILED_TYPE String String #-}
+{-# COMPILED_TYPE_UHC String #-}
 
 ------------------------------------------------------------------------
 -- Primitive operations

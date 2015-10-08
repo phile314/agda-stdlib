@@ -18,6 +18,7 @@ postulate
 
 {-# IMPORT IO.FFI #-}
 {-# COMPILED_TYPE IO IO.FFI.AgdaIO #-}
+{-# COMPILED_TYPE_UHC IO #-}
 {-# BUILTIN IO IO #-}
 
 infixl 1 _>>=_

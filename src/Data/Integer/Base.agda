@@ -28,6 +28,7 @@ infix  4 _≤_
 data ℤ : Set where
   -[1+_] : (n : ℕ) → ℤ  -- -[1+ n ] stands for - (1 + n).
   +_     : (n : ℕ) → ℤ  -- + n stands for n.
+{-# COMPILED_DATA_UHC ℤ UHC.Agda.Builtins.Integer minus plus #-}
 
 ------------------------------------------------------------------------
 -- Conversions
